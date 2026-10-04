@@ -1,0 +1,16 @@
+{
+  "name": "Reps — Дневник тренировок",
+  "short_name": "Reps",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f0f10",
+  "theme_color": "#8b6fff",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='40' fill='%238b6fff'/%3E%3Cpath d='M64 44h40c20 0 34 12 34 30 0 13-7 23-19 27l22 47h-26l-18-42h-9v42H64V44zm24 20v22h16c7 0 12-4 12-11 0-7-5-11-12-11h-16z' fill='white'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}

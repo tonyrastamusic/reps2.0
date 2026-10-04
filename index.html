@@ -1,0 +1,3782 @@
+<!DOCTYPE html>
+<html lang="ru" data-accent="purple" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#a78bfa" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Reps" />
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='40' fill='%23a78bfa'/%3E%3Cpath d='M64 44h40c20 0 34 12 34 30 0 13-7 23-19 27l22 47h-26l-18-42h-9v42H64V44zm24 20v22h16c7 0 12-4 12-11 0-7-5-11-12-11h-16z' fill='white'/%3E%3C/svg%3E" />
+<title>Reps</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root, [data-theme="dark"] {
+    --bg: #0f0f10; --bg-card: #1a1a1c; --bg-card-hover: #26262a;
+    --bg-input: #26262a; --bg-input-focus: #2f2f33; --border: #26262a;
+    --text: #ffffff; --text-muted: #8a8a92;
+    --green: #22c55e; --red: #ff6b6b; --orange: #ff9e3d;
+    --card-bg: linear-gradient(160deg, #1a1530 0%, #0f0f10 100%);
+    --card-text: #ffffff;
+    --card-text-muted: #8a8a92;
+    --card-cell-bg: rgba(255,255,255,0.03);
+  }
+  [data-theme="dim"] {
+    --bg: #1e1e24; --bg-card: #292930; --bg-card-hover: #33333b;
+    --bg-input: #33333b; --bg-input-focus: #3d3d46; --border: #33333b;
+    --text: #ececf1; --text-muted: #9a9aa5;
+    --green: #4ade80; --red: #f87171; --orange: #fbbf24;
+    --card-bg: linear-gradient(160deg, #2a2540 0%, #1e1e24 100%);
+    --card-text: #ececf1;
+    --card-text-muted: #9a9aa5;
+    --card-cell-bg: rgba(255,255,255,0.05);
+  }
+  [data-theme="light"] {
+    --bg: #f4f4f6; --bg-card: #ffffff; --bg-card-hover: #f0f0f3;
+    --bg-input: #f0f0f3; --bg-input-focus: #e5e5ea; --border: #e0e0e5;
+    --text: #111114; --text-muted: #6b6b75;
+    --green: #16a34a; --red: #dc2626; --orange: #ea8a2b;
+    --card-bg: linear-gradient(160deg, #f0edff 0%, #ffffff 100%);
+    --card-text: #111114;
+    --card-text-muted: #6b6b75;
+    --card-cell-bg: rgba(0,0,0,0.03);
+  }
+
+  /* ============ АКЦЕНТНЫЕ ЦВЕТА (мягкие, пастельные) ============ */
+  [data-accent="purple"] { --accent: #a78bfa; --accent-soft: rgba(167,139,250,0.16); --accent-light: #c4b5fd; --accent-secondary: #8b6fe8; }
+  [data-accent="indigo"] { --accent: #818cf8; --accent-soft: rgba(129,140,248,0.16); --accent-light: #a5b4fc; --accent-secondary: #6366f1; }
+  [data-accent="blue"]   { --accent: #7dd3fc; --accent-soft: rgba(125,211,252,0.16); --accent-light: #bae6fd; --accent-secondary: #38bdf8; }
+  [data-accent="teal"]   { --accent: #5eead4; --accent-soft: rgba(94,234,212,0.16);  --accent-light: #99f6e4; --accent-secondary: #2dd4bf; }
+  [data-accent="mint"]   { --accent: #86efac; --accent-soft: rgba(134,239,172,0.16); --accent-light: #bbf7d0; --accent-secondary: #4ade80; }
+  [data-accent="green"]  { --accent: #6ee7b7; --accent-soft: rgba(110,231,183,0.16); --accent-light: #a7f3d0; --accent-secondary: #34d399; }
+  [data-accent="lime"]   { --accent: #bef264; --accent-soft: rgba(190,242,100,0.18); --accent-light: #d9f99d; --accent-secondary: #a3e635; }
+  [data-accent="yellow"] { --accent: #fde68a; --accent-soft: rgba(253,230,138,0.18); --accent-light: #fef3c7; --accent-secondary: #fcd34d; }
+  [data-accent="orange"] { --accent: #fdba74; --accent-soft: rgba(253,186,116,0.16); --accent-light: #fed7aa; --accent-secondary: #fb923c; }
+  [data-accent="coral"]  { --accent: #fca5a5; --accent-soft: rgba(252,165,165,0.16); --accent-light: #fecaca; --accent-secondary: #f87171; }
+  [data-accent="pink"]   { --accent: #f9a8d4; --accent-soft: rgba(249,168,212,0.16); --accent-light: #fbcfe8; --accent-secondary: #f472b6; }
+  [data-accent="rose"]   { --accent: #f0abfc; --accent-soft: rgba(240,171,252,0.16); --accent-light: #f5d0fe; --accent-secondary: #e879f9; }
+
+  [data-theme="dark"][data-accent="purple"] { --accent-secondary: #8b6fe8; }
+  [data-theme="dark"][data-accent="indigo"] { --accent-secondary: #6366f1; }
+  [data-theme="dark"][data-accent="blue"]   { --accent-secondary: #38bdf8; }
+  [data-theme="dark"][data-accent="teal"]   { --accent-secondary: #2dd4bf; }
+  [data-theme="dark"][data-accent="mint"]   { --accent-secondary: #4ade80; }
+  [data-theme="dark"][data-accent="green"]  { --accent-secondary: #34d399; }
+  [data-theme="dark"][data-accent="lime"]   { --accent-secondary: #a3e635; }
+  [data-theme="dark"][data-accent="yellow"] { --accent-secondary: #fcd34d; }
+  [data-theme="dark"][data-accent="orange"] { --accent-secondary: #fb923c; }
+  [data-theme="dark"][data-accent="coral"]  { --accent-secondary: #f87171; }
+  [data-theme="dark"][data-accent="pink"]   { --accent-secondary: #f472b6; }
+  [data-theme="dark"][data-accent="rose"]   { --accent-secondary: #e879f9; }
+
+  [data-theme="light"][data-accent="purple"] { --accent: #8b5cf6; --accent-light: #7c3aed; --accent-secondary: #7c3aed; --accent-soft: rgba(139,92,246,0.14); }
+  [data-theme="light"][data-accent="indigo"] { --accent: #6366f1; --accent-light: #4f46e5; --accent-secondary: #4f46e5; --accent-soft: rgba(99,102,241,0.14); }
+  [data-theme="light"][data-accent="blue"]   { --accent: #0ea5e9; --accent-light: #0284c7; --accent-secondary: #0284c7; --accent-soft: rgba(14,165,233,0.14); }
+  [data-theme="light"][data-accent="teal"]   { --accent: #14b8a6; --accent-light: #0d9488; --accent-secondary: #0d9488; --accent-soft: rgba(20,184,166,0.14); }
+  [data-theme="light"][data-accent="mint"]   { --accent: #22c55e; --accent-light: #16a34a; --accent-secondary: #16a34a; --accent-soft: rgba(34,197,94,0.14); }
+  [data-theme="light"][data-accent="green"]  { --accent: #10b981; --accent-light: #059669; --accent-secondary: #059669; --accent-soft: rgba(16,185,129,0.14); }
+  [data-theme="light"][data-accent="lime"]   { --accent: #84cc16; --accent-light: #65a30d; --accent-secondary: #65a30d; --accent-soft: rgba(132,204,22,0.14); }
+  [data-theme="light"][data-accent="yellow"] { --accent: #eab308; --accent-light: #ca8a04; --accent-secondary: #ca8a04; --accent-soft: rgba(234,179,8,0.16); }
+  [data-theme="light"][data-accent="orange"] { --accent: #f97316; --accent-light: #ea580c; --accent-secondary: #ea580c; --accent-soft: rgba(249,115,22,0.14); }
+  [data-theme="light"][data-accent="coral"]  { --accent: #ef4444; --accent-light: #dc2626; --accent-secondary: #dc2626; --accent-soft: rgba(239,68,68,0.14); }
+  [data-theme="light"][data-accent="pink"]   { --accent: #ec4899; --accent-light: #db2777; --accent-secondary: #db2777; --accent-soft: rgba(236,72,153,0.14); }
+  [data-theme="light"][data-accent="rose"]   { --accent: #d946ef; --accent-light: #c026d3; --accent-secondary: #c026d3; --accent-soft: rgba(217,70,239,0.14); }
+
+  [data-theme="dim"][data-accent="purple"] { --accent: #9d7ff5; --accent-light: #b8a1ff; --accent-secondary: #8563e0; }
+  [data-theme="dim"][data-accent="indigo"] { --accent: #7382f0; --accent-light: #94a1f7; --accent-secondary: #5b67d9; }
+  [data-theme="dim"][data-accent="blue"]   { --accent: #6fc4ec; --accent-light: #9dd6f3; --accent-secondary: #4ea9d5; }
+  [data-theme="dim"][data-accent="teal"]   { --accent: #55d9c4; --accent-light: #85e6d5; --accent-secondary: #3bbda9; }
+  [data-theme="dim"][data-accent="mint"]   { --accent: #79dd9f; --accent-light: #a2e9be; --accent-secondary: #5cc582; }
+  [data-theme="dim"][data-accent="green"]  { --accent: #62d6a8; --accent-light: #8ee4c1; --accent-secondary: #44bf8d; }
+  [data-theme="dim"][data-accent="lime"]   { --accent: #b0dd5f; --accent-light: #c8e88a; --accent-secondary: #93c344; }
+  [data-theme="dim"][data-accent="yellow"] { --accent: #edd57f; --accent-light: #f3e2a6; --accent-secondary: #d4ba5e; }
+  [data-theme="dim"][data-accent="orange"] { --accent: #eeaa6b; --accent-light: #f4c398; --accent-secondary: #d68f4d; }
+  [data-theme="dim"][data-accent="coral"]  { --accent: #ea9797; --accent-light: #f0b5b5; --accent-secondary: #d47b7b; }
+  [data-theme="dim"][data-accent="pink"]   { --accent: #e99bc7; --accent-light: #f0b8d7; --accent-secondary: #d47bab; }
+  [data-theme="dim"][data-accent="rose"]   { --accent: #e19ce8; --accent-light: #ecb9f0; --accent-secondary: #c97dd1; }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  input, textarea { -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
+  html, body { background: var(--bg); }
+  body { margin: 0; color: var(--text); font-family: 'Inter', system-ui, sans-serif; overscroll-behavior: none; transition: background 0.2s, color 0.2s; }
+
+  .container { min-height: 100vh; padding: 24px 0 220px; padding-bottom: calc(220px + env(safe-area-inset-bottom, 0px)); }
+
+  .icon { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: -4px; flex-shrink: 0; }
+  .icon-sm { width: 16px; height: 16px; }
+  .icon-lg { width: 44px; height: 44px; stroke-width: 1.5; }
+
+  .top-tabs { display: flex; gap: 6px; padding: 0 20px 20px; justify-content: center; }
+  .top-tab { flex: 1; max-width: 140px; background: var(--bg-card); color: var(--text-muted); border: none; border-radius: 12px; padding: 12px 8px; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .top-tab.active { background: var(--accent); color: #fff; }
+  .tabs { display: flex; gap: 6px; padding: 0 20px 16px; justify-content: flex-end; flex-wrap: wrap; }
+  .tab-btn { background: var(--bg-card); color: var(--text-muted); border: none; border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; font-family: inherit; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+
+  .timer-bar-wrap { position: sticky; top: 0; z-index: 50; padding: 8px 0 12px; background: linear-gradient(to bottom, var(--bg) 60%, transparent); margin: 0 0 8px; padding-top: calc(8px + env(safe-area-inset-top, 0px)); }
+  .timer-bar { margin: 0 20px; background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); border-radius: 16px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 24px var(--accent-soft); color: #fff; }
+  .timer-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: #fff; animation: pulse 2s ease-in-out infinite; }
+  .timer-icon svg { stroke: #fff; fill: none; stroke-width: 1.8; }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.08);} }
+  .timer-info { flex: 1; min-width: 0; }
+  .timer-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; margin-bottom: 2px; }
+  .timer-value { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 0.5px; }
+  .timer-stop { background: rgba(255,255,255,0.2); color: #fff; border: none; border-radius: 10px; padding: 10px 14px; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+
+  .calendar-nav { display: flex; align-items: center; gap: 8px; padding: 0 20px 12px; }
+  .cal-nav-btn { width: 36px; height: 36px; background: var(--bg-card); color: var(--text); border: none; border-radius: 10px; font-size: 18px; font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cal-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .cal-range { flex: 1; text-align: center; color: var(--text-muted); font-size: 12px; font-weight: 500; }
+  .calendar { display: flex; gap: 6px; padding: 0 20px 20px; overflow-x: auto; scrollbar-width: none; }
+  .calendar::-webkit-scrollbar { display: none; }
+  .day { flex-shrink: 0; width: 52px; padding: 12px 0; border-radius: 14px; background: var(--bg-card); text-align: center; cursor: pointer; transition: background 0.15s; color: var(--text); }
+  .day.active { background: var(--accent); }
+  .day .wd { font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
+  .day.active .wd { color: rgba(255,255,255,0.8); }
+  .day .num { font-size: 18px; font-weight: 600; }
+  .day .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); margin: 6px auto 0; opacity: 0; }
+  .day.active .dot { background: #fff; }
+  .day.today .num { color: var(--accent); }
+  .day.active .num { color: #fff; }
+
+  .page-title { padding: 0 20px 4px; font-size: 26px; font-weight: 700; color: var(--text); }
+  .page-date { padding: 0 20px 16px; color: var(--text-muted); font-size: 14px; text-transform: capitalize; }
+
+  .empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+  .empty-icon { width: 44px; height: 44px; stroke: var(--text-muted); stroke-width: 1.5; fill: none; margin-bottom: 12px; opacity: 0.4; }
+  .empty-hint { font-size: 14px; margin-top: 6px; opacity: 0.7; }
+
+  .exercises { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; }
+  .exercise-card { background: var(--bg-card); border-radius: 16px; padding: 16px; position: relative; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s; }
+  .exercise-card.superset { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+
+  .exercise-head { display: flex; align-items: flex-start; margin-bottom: 12px; gap: 4px; }
+  .exercise-name { font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; color: var(--text); flex: 1; min-width: 0; }
+  .exercise-name .chart-hint { color: var(--text-muted); display: inline-flex; padding: 4px; }
+  .exercise-tonnage { font-size: 12px; color: var(--text-muted); font-weight: 400; margin-right: 4px; align-self: center; }
+  .exercise-type-badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 8px; background: var(--accent-soft); color: var(--accent-light); text-transform: uppercase; letter-spacing: 0.5px; margin-left: 6px; }
+  .superset-label { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: var(--accent); color: #fff; margin-right: 6px; font-variant-numeric: tabular-nums; }
+
+  .collapse-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 6px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .collapse-btn svg { transition: transform 0.25s; }
+  .collapse-btn.collapsed svg { transform: rotate(-90deg); }
+
+  .rest-timer { display: flex; align-items: center; gap: 8px; padding: 6px 12px; margin: 2px 0 8px 32px; background: var(--accent-soft); border-radius: 10px; color: var(--accent-light); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; cursor: pointer; animation: restIn 0.3s ease-out; }
+  @keyframes restIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+  .rest-timer.done { background: rgba(34,197,94,0.15); color: var(--green); }
+
+  .set-row { display: flex; align-items: center; gap: 8px; background: var(--bg-card); border-radius: 10px; padding: 4px 0; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; touch-action: pan-y; will-change: transform; margin-bottom: 8px; }
+  .set-num { color: var(--text-muted); font-size: 13px; width: 24px; text-align: center; }
+  .set-row input { background: var(--bg-input); border: none; border-radius: 10px; padding: 10px 12px; color: var(--text); font-size: 15px; font-family: inherit; outline: none; flex: 1; text-align: center; min-width: 0; }
+  .set-row input:focus { background: var(--bg-input-focus); }
+  .times { color: var(--text-muted); font-size: 13px; }
+  .icon-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 6px; display: inline-flex; align-items: center; justify-content: center; }
+  .link-btn { background: transparent; border: none; color: var(--accent); font-size: 14px; font-weight: 600; cursor: pointer; padding: 6px 0; font-family: inherit; display: flex; align-items: center; gap: 6px; }
+  .prev-hint { font-size: 11px; color: var(--text-muted); margin-top: -4px; margin-bottom: 8px; padding-left: 32px; }
+
+  .bottom-bar { position: fixed; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); display: flex; gap: 10px; width: calc(100% - 40px); max-width: 520px; z-index: 10; }
+  .bottom-bar::before { content: ''; position: absolute; inset: -40px -20px -20px -20px; background: linear-gradient(to top, var(--bg) 50%, transparent); pointer-events: none; z-index: -1; }
+  .bar-btn { flex: 1 1 0; min-width: 0; border: none; border-radius: 16px; padding: 18px 16px; font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer; white-space: nowrap; transition: transform 0.1s; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .bar-btn:active { transform: scale(0.97); }
+  .bar-btn.add { background: var(--accent); color: #fff; box-shadow: 0 8px 24px var(--accent-soft); }
+  .bar-btn.start { background: var(--accent-secondary); color: #fff; box-shadow: 0 8px 24px var(--accent-soft); }
+
+  .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 100; display: flex; align-items: flex-end; justify-content: center; backdrop-filter: blur(8px); }
+  .modal-bg.center-mode { align-items: center; padding: 20px; }
+  .modal { background: var(--bg); border-radius: 24px 24px 0 0; width: 100%; max-width: 600px; max-height: 92vh; overflow-y: auto; padding: 20px 20px 40px; transition: transform 0.2s; color: var(--text); }
+  .modal.center { border-radius: 24px; margin: auto; max-width: 420px; align-self: center; padding: 24px; }
+  .handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; touch-action: none; }
+  .modal h2 { font-size: 20px; font-weight: 700; margin: 0 0 16px; color: var(--text); }
+  .search-input { background: var(--bg-card); border: none; border-radius: 12px; padding: 14px 16px; color: var(--text); font-size: 16px; font-family: inherit; outline: none; width: 100%; margin-bottom: 16px; }
+  .section-label { color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; margin-top: 4px; font-weight: 500; }
+
+  .category-item { display: flex; align-items: center; justify-content: space-between; background: var(--bg-card); border: none; border-radius: 14px; padding: 16px; color: var(--text); font-size: 15px; font-weight: 500; font-family: inherit; cursor: pointer; width: 100%; margin-bottom: 8px; text-align: left; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); touch-action: pan-y; will-change: transform; }
+  .category-item .count { color: var(--text-muted); font-size: 13px; font-weight: 400; display: flex; align-items: center; gap: 8px; }
+
+  .ex-item { background: var(--bg-card); border-radius: 12px; padding: 4px 4px 4px 14px; display: flex; align-items: center; gap: 4px; margin-bottom: 6px; transition: background 0.15s, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); touch-action: pan-y; will-change: transform; }
+  .ex-item.selected { background: var(--accent-soft); border: 1px solid var(--accent); }
+  .ex-check { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; color: transparent; flex-shrink: 0; transition: all 0.15s; }
+  .ex-check.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .ex-name-btn { background: transparent; border: none; color: var(--text); font-size: 15px; font-family: inherit; cursor: pointer; text-align: left; flex: 1; padding: 12px 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ex-action-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 10px; flex-shrink: 0; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; }
+
+  .drag-handle { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; margin-right: 4px; color: var(--text-muted); cursor: grab; flex-shrink: 0; border-radius: 6px; touch-action: none; }
+  .drag-handle svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+  .edit-row { display: flex; gap: 8px; align-items: center; background: var(--bg-card); border-radius: 12px; padding: 4px 4px 4px 14px; margin-bottom: 6px; }
+  .edit-row input { flex: 1; background: transparent; border: none; color: var(--text); font-size: 15px; font-family: inherit; outline: none; padding: 12px 0; }
+  .edit-row .ok-btn { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 10px 14px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+  .btn-primary { background: var(--accent); color: #fff; border: none; border-radius: 12px; padding: 14px 20px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; width: 100%; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-cancel { background: var(--bg-card); color: var(--text); border: none; border-radius: 12px; padding: 14px 20px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .btn-dashed { background: transparent; border: 1px dashed var(--border); border-radius: 12px; padding: 14px 16px; color: var(--accent); font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer; width: 100%; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .input { background: var(--bg-card); border: none; border-radius: 12px; padding: 14px 16px; color: var(--text); font-size: 16px; font-family: inherit; outline: none; width: 100%; margin-bottom: 12px; }
+  .back-btn { background: transparent; border: none; color: var(--text-muted); font-size: 14px; font-family: inherit; cursor: pointer; padding: 6px 0; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+
+  .chart-wrap { padding: 8px 0 16px; }
+  .chart-stats { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .stat-box { background: var(--bg-card); border-radius: 12px; padding: 12px 16px; flex: 1; min-width: 90px; }
+  .stat-label { color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 5px; }
+  .stat-value { font-size: 20px; font-weight: 700; margin-top: 4px; color: var(--text); }
+  .history-item { background: var(--bg-card); border-radius: 14px; padding: 14px 16px; margin-bottom: 8px; }
+  .history-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .history-date { font-size: 14px; font-weight: 600; color: var(--text); }
+  .history-tonnage { font-size: 12px; color: var(--accent); font-weight: 600; background: var(--accent-soft); padding: 4px 10px; border-radius: 8px; }
+  .history-sets { display: flex; flex-wrap: wrap; gap: 6px; }
+  .history-set { background: var(--bg-input); border-radius: 8px; padding: 6px 10px; font-size: 13px; font-variant-numeric: tabular-nums; color: var(--text); }
+  .history-set .w { color: var(--text); font-weight: 600; }
+  .history-set .r { color: var(--text-muted); }
+
+  .tpl-item { display: flex; align-items: center; gap: 8px; background: var(--bg-card); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; }
+  .tpl-info { flex: 1; min-width: 0; }
+  .tpl-name { font-weight: 600; font-size: 15px; color: var(--text); }
+  .tpl-sub { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
+  .tpl-actions { display: flex; gap: 4px; flex-shrink: 0; }
+  .tpl-btn { background: var(--bg-input); color: var(--text); border: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; font-weight: 500; font-family: inherit; cursor: pointer; }
+  .tpl-btn.primary { background: var(--accent); color: #fff; }
+
+  .result-card { background: var(--card-bg); border: 1px solid var(--accent-soft); border-radius: 24px; padding: 28px 24px; margin-bottom: 16px; position: relative; overflow: hidden; width: 100%; color: var(--card-text); transition: background 0.2s, color 0.2s, border-color 0.2s; }
+  .result-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 180px; height: 180px; background: radial-gradient(circle, var(--accent-soft), transparent 70%); pointer-events: none; }
+  .result-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-soft); color: var(--accent-light); font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .result-title { font-size: 26px; font-weight: 800; margin: 0 0 4px; position: relative; z-index: 1; color: var(--card-text); }
+  .result-date { color: var(--card-text-muted); font-size: 14px; margin-bottom: 24px; position: relative; z-index: 1; }
+  .result-main { display: flex; gap: 16px; margin-bottom: 20px; position: relative; z-index: 1; }
+  .result-main-item { flex: 1; min-width: 0; background: var(--card-cell-bg); border-radius: 14px; padding: 14px 16px; }
+  .result-main-label { color: var(--card-text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
+  .result-main-value { font-size: clamp(16px, 5vw, 24px); font-weight: 700; font-variant-numeric: tabular-nums; color: var(--card-text); overflow-wrap: break-word; word-break: break-word; line-height: 1.2; }
+  .result-main-value small { font-size: 12px; color: var(--card-text-muted); font-weight: 500; margin-left: 2px; }
+  .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; position: relative; z-index: 1; }
+  .result-cell { background: var(--card-cell-bg); border-radius: 12px; padding: 12px 14px; min-width: 0; }
+  .result-cell-label { color: var(--card-text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; }
+  .result-cell-value { font-size: 18px; font-weight: 700; margin-top: 2px; font-variant-numeric: tabular-nums; color: var(--card-text); overflow-wrap: break-word; word-break: break-word; }
+  .result-muscles { position: relative; z-index: 1; margin-bottom: 8px; }
+  .result-muscles-label { color: var(--card-text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+  .result-muscles-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .muscle-tag { background: var(--accent-soft); color: var(--accent-light); font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 20px; }
+  .result-footer { position: relative; z-index: 1; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--card-text-muted); font-size: 12px; display: flex; align-items: center; gap: 8px; }
+  .result-footer .logo-text { font-weight: 700; color: var(--accent); }
+
+  .measure-card { background: var(--bg-card); border-radius: 16px; padding: 18px 20px; margin: 0 20px 12px; }
+  .measure-date-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .measure-date { font-size: 15px; font-weight: 600; color: var(--text); }
+  .measure-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .measure-cell { background: var(--bg-input); border-radius: 10px; padding: 10px 12px; }
+  .measure-cell-label { color: var(--text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .measure-cell-value { font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text); }
+  .measure-cell-value small { font-size: 11px; color: var(--text-muted); font-weight: 500; margin-left: 2px; }
+  .measure-form { display: flex; flex-direction: column; gap: 12px; }
+  .measure-form-row { display: flex; align-items: center; gap: 12px; }
+  .measure-form-label { flex: 1; color: var(--text); font-size: 15px; }
+  .measure-form-label small { display: block; color: var(--text-muted); font-size: 11px; margin-top: 2px; }
+  .measure-form input { width: 100px; background: var(--bg-card); border: none; border-radius: 10px; padding: 12px 14px; color: var(--text); font-size: 16px; font-family: inherit; outline: none; text-align: center; font-variant-numeric: tabular-nums; }
+  .chip-row { display: flex; gap: 6px; margin: 0 20px 16px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+  .chip-row::-webkit-scrollbar { display: none; }
+  .chip { flex-shrink: 0; background: var(--bg-card); color: var(--text-muted); border: none; border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; font-family: inherit; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+
+  .settings-section { margin: 0 20px 20px; background: var(--bg-card); border-radius: 16px; overflow: hidden; }
+  .settings-section-title { padding: 16px 20px 8px; color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+  .settings-row { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-top: 1px solid var(--border); cursor: pointer; transition: background 0.15s; }
+  .settings-row:first-of-type { border-top: none; }
+  .settings-row:not(.disabled):active { background: var(--bg-card-hover); }
+  .settings-row.disabled { opacity: 0.45; cursor: not-allowed; }
+  .settings-icon { width: 36px; height: 36px; background: var(--bg-input); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--text-muted); }
+  .settings-info { flex: 1; min-width: 0; }
+  .settings-label { font-size: 15px; font-weight: 500; color: var(--text); }
+  .settings-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .settings-value { color: var(--text-muted); font-size: 14px; display: flex; align-items: center; gap: 6px; }
+  .settings-soon { background: var(--bg-input); color: var(--text-muted); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .segmented { display: flex; gap: 4px; background: var(--bg-input); padding: 4px; border-radius: 12px; margin: 0 20px 20px; flex-wrap: wrap; }
+  .segmented button { flex: 1; min-width: 60px; background: transparent; color: var(--text-muted); border: none; border-radius: 9px; padding: 10px 8px; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .segmented button.active { background: var(--accent); color: #fff; }
+  .segmented button.active svg { stroke: #fff; }
+
+  .color-picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0 20px 20px; max-width: 260px; }
+  .color-dot { width: 44px; height: 44px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .color-dot:active { transform: scale(0.92); }
+  .color-dot.active { border-color: var(--text); transform: scale(1.08); box-shadow: 0 4px 16px var(--accent-soft); }
+  .color-dot.active::after { content: ''; position: absolute; inset: -7px; border-radius: 50%; border: 2px solid var(--accent); opacity: 0.4; }
+
+  .type-selector { display: flex; gap: 6px; margin-bottom: 12px; }
+  .type-opt { flex: 1; background: var(--bg-card); color: var(--text-muted); border: 1px solid transparent; border-radius: 10px; padding: 12px 8px; font-size: 13px; font-weight: 500; font-family: inherit; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .type-opt.active { background: var(--accent-soft); color: var(--accent-light); border-color: var(--accent); }
+  .type-opt.active svg { stroke: var(--accent-light); }
+
+  .action-menu-item { display: flex; align-items: center; gap: 12px; padding: 16px 18px; background: var(--bg-card); border-radius: 12px; margin-bottom: 6px; cursor: pointer; font-size: 15px; color: var(--text); font-family: inherit; border: none; width: 100%; text-align: left; }
+  .action-menu-item:active { background: var(--bg-card-hover); }
+  .action-menu-item.danger { color: var(--red); }
+
+  .superset-check-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-card); border-radius: 12px; margin-bottom: 6px; cursor: pointer; font-size: 15px; color: var(--text); border: none; width: 100%; text-align: left; font-family: inherit; }
+  .superset-check-item.selected { background: var(--accent-soft); border: 1px solid var(--accent); }
+  .superset-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; color: transparent; flex-shrink: 0; transition: all 0.15s; }
+  .superset-check.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .picker-actions { position: sticky; bottom: 0; display: flex; gap: 8px; padding: 16px 0 8px; margin-top: 8px; background: var(--bg); z-index: 10; box-shadow: 0 -20px 20px -10px var(--bg); }
+  .picker-actions button { flex: 1; }
+  .modal.has-picker-actions { padding-bottom: 100px; }
+
+  .share-card-hidden { position: fixed; left: -9999px; top: 0; width: 1080px; height: 1920px; padding: 120px 80px; display: flex; flex-direction: column; color: #fff; font-family: 'Inter', system-ui, sans-serif; transition: background 0.2s; }
+  .share-card-hidden[data-share-theme="dark"] { background: linear-gradient(160deg, #1a1530 0%, #0f0f10 100%); color: #fff; }
+  .share-card-hidden[data-share-theme="light"] { background: linear-gradient(160deg, #f0edff 0%, #ffffff 100%); color: #111114; }
+
+  .report-preview { background: var(--bg-card); border-radius: 12px; padding: 16px 18px; max-height: 50vh; overflow-y: auto; white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace; font-size: 12px; line-height: 1.6; color: var(--text); margin-bottom: 16px; border: 1px solid var(--border); -webkit-user-select: text; user-select: text; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script><script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useMemo } = React;
+
+const WORKOUTS_KEY = 'reps-workouts';
+const CATALOG_KEY = 'reps-catalog';
+const TEMPLATES_KEY = 'reps-templates';
+const ACTIVE_KEY = 'reps-active';
+const MEASURES_KEY = 'reps-measures';
+const SETTINGS_KEY = 'reps-settings';
+const MEASURE_FIELDS_KEY = 'reps-measure-fields';
+const COLLAPSED_KEY = 'reps-collapsed';
+const REST_PRESETS = [60, 90, 120, 180, 240, 300];
+
+const EX_TYPE = { STRENGTH: 'strength', CARDIO: 'cardio', TIME: 'time' };
+const CARDIO_SECTIONS = ['cardio'];
+const TIME_SECTIONS = ['abs'];
+
+/* ============ УТИЛИТЫ ============ */
+function uid() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+}
+function safeNum(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : 0;
+}
+
+/* ============ ЗВУК ТАЙМЕРА ============ */
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (Ctx) audioCtx = new Ctx();
+  }
+  return audioCtx;
+}
+function unlockAudio() {
+  const ctx = getAudioCtx();
+  if (ctx && ctx.state === 'suspended') ctx.resume().catch(() => {});
+}
+function playRestDoneSound(enabled) {
+  if (!enabled) return;
+  const ctx = getAudioCtx();
+  if (!ctx) return;
+  if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+  const playBeep = (startTime) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'square';
+    osc.frequency.value = 880;
+    gain.gain.setValueAtTime(0.15, startTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.15);
+    osc.start(startTime);
+    osc.stop(startTime + 0.15);
+  };
+  const now = ctx.currentTime;
+  playBeep(now);
+  playBeep(now + 0.2);
+}
+
+/* ============ ИКОНКИ ============ */
+const Icons = {
+  dumbbell: <svg viewBox="0 0 24 24" className="icon"><path d="M6.5 6.5v11"/><path d="M3.5 9v6"/><path d="M17.5 6.5v11"/><path d="M20.5 9v6"/><path d="M6.5 12h11"/></svg>,
+  clock: <svg viewBox="0 0 24 24" className="icon"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>,
+  flame: <svg viewBox="0 0 24 24" className="icon"><path d="M12 2c1 3 4 5 4 9a4 4 0 0 1-8 0c0-1 .5-2 1-2.5C9 10 8 11 8 13a4 4 0 0 0 8 0c0-4-4-6-4-11z"/></svg>,
+  target: <svg viewBox="0 0 24 24" className="icon"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>,
+  checkmark: <svg viewBox="0 0 24 24" className="icon"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>,
+  chart: <svg viewBox="0 0 24 24" className="icon"><path d="M4 20h16"/><path d="M6 16l4-6 3 4 5-8"/></svg>,
+  copy: <svg viewBox="0 0 24 24" className="icon"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>,
+  trash: <svg viewBox="0 0 24 24" className="icon"><path d="M4 7h16"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"/></svg>,
+  edit: <svg viewBox="0 0 24 24" className="icon"><path d="M4 20h4l10-10a2.5 2.5 0 0 0-3.5-3.5L4.5 16.5 4 20z"/><path d="M13.5 7.5l3 3"/></svg>,
+  share: <svg viewBox="0 0 24 24" className="icon"><path d="M12 3v13"/><path d="M7 8l5-5 5 5"/><path d="M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>,
+  save: <svg viewBox="0 0 24 24" className="icon"><path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M8 4v5h7V4"/><circle cx="12" cy="15" r="2"/></svg>,
+  play: <svg viewBox="0 0 24 24" className="icon"><path d="M7 4l12 8-12 8z"/></svg>,
+  stop: <svg viewBox="0 0 24 24" className="icon"><rect x="5" y="5" width="14" height="14" rx="2"/></svg>,
+  plus: <svg viewBox="0 0 24 24" className="icon"><path d="M12 5v14"/><path d="M5 12h14"/></svg>,
+  palette: <svg viewBox="0 0 24 24" className="icon"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.2 0-.8.7-1.5 1.5-1.5H16a5 5 0 0 0 5-5c0-3.9-4-7-9-7z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/></svg>,
+  globe: <svg viewBox="0 0 24 24" className="icon"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>,
+  waves: <svg viewBox="0 0 24 24" className="icon"><path d="M3 8c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M3 14c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2"/></svg>,
+  ruler: <svg viewBox="0 0 24 24" className="icon"><rect x="3" y="8" width="18" height="8" rx="1.5"/><path d="M7 8v3"/><path d="M11 8v2"/><path d="M15 8v3"/><path d="M19 8v2"/></svg>,
+  scale: <svg viewBox="0 0 24 24" className="icon"><path d="M12 3v18"/><path d="M5 7h14"/><path d="M8 7l-2 5a3 3 0 0 0 6 0L10 7"/><path d="M16 7l-2 5a3 3 0 0 0 6 0L18 7"/></svg>,
+  cloud: <svg viewBox="0 0 24 24" className="icon"><path d="M7 18a4 4 0 0 1 0-8 5.5 5.5 0 0 1 10.5 1.5A3.5 3.5 0 0 1 17 18z"/></svg>,
+  bell: <svg viewBox="0 0 24 24" className="icon"><path d="M6 9a6 6 0 0 1 12 0v4l2 3H4l2-3V9z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>,
+  disk: <svg viewBox="0 0 24 24" className="icon"><path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M8 4v5h7V4"/><circle cx="12" cy="15" r="2"/></svg>,
+  info: <svg viewBox="0 0 24 24" className="icon"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></svg>,
+  chevronRight: <svg viewBox="0 0 24 24" className="icon icon-sm"><path d="M9 6l6 6-6 6"/></svg>,
+  chevronLeft: <svg viewBox="0 0 24 24" className="icon icon-sm"><path d="M15 6l-6 6 6 6"/></svg>,
+  chevronDown: <svg viewBox="0 0 24 24" className="icon icon-sm"><path d="M6 9l6 6 6-6"/></svg>,
+  run: <svg viewBox="0 0 24 24" className="icon"><circle cx="15" cy="5" r="1.8"/><path d="M10 21l2-5 3 2 1 4"/><path d="M7 12l4-3 3 2 3-1"/><path d="M11 9l-1-3"/></svg>,
+  timer: <svg viewBox="0 0 24 24" className="icon"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M9 3h6"/></svg>,
+  settings: <svg viewBox="0 0 24 24" className="icon"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 0 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>,
+  moon: <svg viewBox="0 0 24 24" className="icon"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>,
+  sun: <svg viewBox="0 0 24 24" className="icon"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>,
+  auto: <svg viewBox="0 0 24 24" className="icon"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>,
+  dim: <svg viewBox="0 0 24 24" className="icon"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" opacity="0.5"/></svg>,
+  gripVertical: <svg viewBox="0 0 24 24" className="icon icon-sm"><circle cx="9" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="9" cy="18" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="18" r="1.2" fill="currentColor" stroke="none"/></svg>,
+  link: <svg viewBox="0 0 24 24" className="icon"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1 1"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1-1"/></svg>,
+  unlink: <svg viewBox="0 0 24 24" className="icon"><path d="M17 7l3-3"/><path d="M4 20l3-3"/><path d="M10 13a5 5 0 0 0 7.07 0"/><path d="M14 11a5 5 0 0 0-7.07 0"/></svg>,
+  volume: <svg viewBox="0 0 24 24" className="icon"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>,
+  volumeOff: <svg viewBox="0 0 24 24" className="icon"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M23 9l-6 6"/><path d="M17 9l6 6"/></svg>,
+};
+
+function Icon({ name, className = '' }) {
+  const el = Icons[name];
+  if (!el) return null;
+  if (!className) return el;
+  return React.cloneElement(el, { className: `icon ${className}` });
+}
+
+function Logo({ size = 32, color = 'currentColor' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" style={{ display: 'block' }}>
+      <path d="M7 5 H18 C22.5 5 26 8 26 12 C26 15.5 23.8 18 20.5 18.7" stroke={color} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+      <path d="M7 5 V18" stroke={color} strokeWidth="2.6" strokeLinecap="round" fill="none"/>
+      <path d="M7 22 V27" stroke={color} strokeWidth="2.6" strokeLinecap="round" fill="none"/>
+      <path d="M14 27 L22 18.7" stroke={color} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+    </svg>
+  );
+}
+
+/* ============ I18N ============ */
+const I18N = {
+  ru: {
+    workouts: 'Тренировки', measures: 'Замеры', settings: 'Настройки',
+    today: 'Сегодня', plan: 'План', workout: 'Тренировка',
+    no_exercises: 'Нет упражнений',
+    add_or_start: 'Начните тренировку или добавьте упражнение',
+    add_or_start_active: 'Добавьте упражнение и начинайте',
+    add: 'Добавить', start: 'Начать', finish: 'Завершить',
+    workout_in_progress: 'Тренировка идёт',
+    save: 'Сохранить', templates: 'Шаблоны',
+    templates_empty: 'Пока нет шаблонов.', template_name: 'Например, День ног',
+    save_as_template: 'Сохранить как шаблон',
+    add_exercise: 'Добавить упражнение', choose_category: 'Выбрать раздел',
+    create_category: 'Создать раздел', new_category: 'Новый раздел',
+    new_exercise: 'Новое упражнение', delete_category: 'Удалить раздел',
+    delete_section_confirm: 'Удалить раздел вместе со всеми упражнениями?',
+    delete_exercise_from_catalog: 'Удалить упражнение из базы?',
+    search_all: 'Поиск по всем упражнениям...',
+    found: 'Найдено', nothing_found: 'Ничего не найдено',
+    all_categories: 'Все разделы', back: 'Назад',
+    section: 'Раздел', exercise_type: 'Тип упражнения',
+    type_strength: 'Сила', type_cardio: 'Кардио', type_time: 'Время',
+    strength: 'сила', cardio: 'кардио', time: 'время',
+    reps: 'повт', minutes: 'мин', seconds: 'сек',
+    add_set: 'подход', last_time: 'Прошлый раз',
+    tonnage: 'Тоннаж', duration: 'Длительность', distance: 'Дистанция',
+    exercises_count: 'Упражнений', sets_count: 'Подходов',
+    cardio_min: 'Кардио', time_sec: 'Время',
+    calories_burned: 'Сожжено', kcal: 'ккал',
+    trained_groups: 'Группы мышц',
+    share: 'Поделиться', sharing: 'Готовлю картинку...',
+    close: 'Закрыть', cancel: 'Отмена',
+    great_job: 'Отличная работа!', workout_completed: 'Тренировка завершена',
+    chart_progress: 'Прогресс', chart_current: 'Текущий',
+    chart_max: 'Максимум', chart_change: 'Изменение',
+    history: 'История', history_sets: 'История подходов',
+    personal_records: 'Личные рекорды',
+    record_max_weight: 'Макс. вес', record_max_reps: 'Макс. повторов',
+    record_max_tonnage: 'Макс. тоннаж',
+    show_1rm: 'Показать прогноз 1ПМ', hide_1rm: 'Скрыть прогноз 1ПМ',
+    one_rm_title: 'Прогноз 1ПМ',
+    one_rm_desc: 'Одноповторный максимум (формула Эпли). Приблизительная оценка максимального веса на 1 раз.',
+    new_measure: 'Новый замер', edit_measure: 'Редактировать замер',
+    measures_empty: 'Пока нет замеров', measures_hint: 'Нажмите «Новый замер», чтобы добавить',
+    date: 'Дата', values: 'Значения',
+    add_field: 'Добавить поле', new_field: 'Новое поле',
+    field_name: 'Название поля', field_unit: 'Единица измерения',
+    field_name_placeholder: 'Например, Обхват шеи',
+    unit_placeholder: 'см, кг, мм, %',
+    edit_field: 'Редактировать поле',
+    delete_field_confirm: 'Удалить это поле? Значения в прошлых замерах сохранятся.',
+    fields: 'Поля замеров', manage_fields: 'Управление полями',
+    set_weight_placeholder: 'кг', set_reps_placeholder: 'повт',
+    set_min_placeholder: 'мин', set_km_placeholder: 'км', set_sec_placeholder: 'сек',
+    theme: 'Тема', theme_dark: 'Тёмная', theme_dim: 'Сумрак', theme_light: 'Светлая', theme_auto: 'Авто',
+    language: 'Язык',
+    units: 'Единицы измерения',
+    app_color: 'Цвет приложения',
+    vibration: 'Вибрация', vibration_desc: 'Лёгкая вибрация при действиях',
+    body_weight: 'Вес тела', body_weight_desc: 'Для расчёта калорий',
+    on: 'Вкл', off: 'Выкл',
+    sync: 'Синхронизация', sync_desc: 'Сохранение данных в облаке',
+    reminders: 'Напоминания', reminders_desc: 'Уведомления о тренировках',
+    export_import: 'Экспорт и импорт', export_import_desc: 'Резервная копия данных',
+    export_data: 'Сохранить данные файлом',
+    import_data: 'Загрузить данные из файла',
+    export_data_desc: 'Скачать все тренировки и замеры одним файлом',
+    import_data_desc: 'Загрузить данные из резервной копии',
+    export_btn: 'Скачать',
+    import_btn: 'Загрузить',
+    import_confirm: 'Импорт заменит текущие данные. Продолжить?',
+    import_success: 'Данные успешно загружены',
+    import_error: 'Не удалось прочитать файл',
+    about: 'О приложении', about_desc: 'Версия и информация',
+    version: 'Версия', soon: 'Скоро',
+    settings_section_general: 'Общие',
+    settings_section_units: 'Единицы',
+    settings_section_account: 'Данные',
+    settings_section_about: 'О приложении',
+    settings_section_workout: 'Тренировка',
+    danger_zone: 'Опасная зона',
+    clear_data: 'Очистить все данные',
+    clear_data_desc: 'Удалить тренировки, замеры и настройки',
+    clear_data_confirm: 'Удалить ВСЕ данные? Это действие необратимо.',
+    cleared: 'Все данные удалены',
+    add_selected: 'Добавить', selected_count: 'выбрано',
+    no_data: 'Нет данных.',
+    chart_no_data: 'Пока нет данных. Запишите тренировку с весом.',
+    delete: 'Удалить', duplicate: 'Дублировать подход',
+    delete_set_confirm: 'Удалить подход?',
+    delete_exercise_confirm: 'Удалить упражнение?',
+    rest_timer: 'Таймер отдыха',
+    rest_timer_desc: 'Отсчёт после каждого подхода',
+    rest_duration: 'Длительность отдыха',
+    rest_duration_desc: 'Сколько секунд отдыхать между подходами',
+    rest_sound: 'Звук таймера',
+    rest_sound_desc: 'Двойной биип при окончании отдыха',
+    rest_done: 'Отдых завершён',
+    skip_rest: 'Пропустить',
+    open_chart: 'График',
+    superset_create: 'Объединить в группу',
+    superset_remove: 'Убрать из группы',
+    superset_dissolve: 'Разъединить группу',
+    superset_choose: 'Выберите упражнения для объединения',
+    superset_only_mine: 'Объединять можно только упражнения текущей тренировки',
+    rename: 'Переименовать',
+    delete_exercise: 'Удалить упражнение',
+    action_menu: 'Действия',
+    coach_report: 'Отчёт тренеру',
+    share_text: 'Поделиться текстом',
+    download_txt: 'Скачать .txt',
+    copy: 'Копировать',
+    copied: 'Скопировано',
+  },
+  en: {
+    workouts: 'Workouts', measures: 'Measures', settings: 'Settings',
+    today: 'Today', plan: 'Plan', workout: 'Workout',
+    no_exercises: 'No exercises',
+    add_or_start: 'Start workout or add exercise',
+    add_or_start_active: 'Add exercise and start',
+    add: 'Add', start: 'Start', finish: 'Finish',
+    workout_in_progress: 'Workout in progress',
+    save: 'Save', templates: 'Templates',
+    templates_empty: 'No templates yet.', template_name: 'E.g., Leg day',
+    save_as_template: 'Save as template',
+    add_exercise: 'Add exercise', choose_category: 'Choose category',
+    create_category: 'Create category', new_category: 'New category',
+    new_exercise: 'New exercise', delete_category: 'Delete category',
+    delete_section_confirm: 'Delete category with all exercises?',
+    delete_exercise_from_catalog: 'Delete exercise from base?',
+    search_all: 'Search all exercises...',
+    found: 'Found', nothing_found: 'Nothing found',
+    all_categories: 'All categories', back: 'Back',
+    section: 'Category', exercise_type: 'Exercise type',
+    type_strength: 'Strength', type_cardio: 'Cardio', type_time: 'Time',
+    strength: 'strength', cardio: 'cardio', time: 'time',
+    reps: 'reps', minutes: 'min', seconds: 'sec',
+    add_set: 'set', last_time: 'Last time',
+    tonnage: 'Volume', duration: 'Duration', distance: 'Distance',
+    exercises_count: 'Exercises', sets_count: 'Sets',
+    cardio_min: 'Cardio', time_sec: 'Time',
+    calories_burned: 'Burned', kcal: 'kcal',
+    trained_groups: 'Muscle groups',
+    share: 'Share', sharing: 'Preparing image...',
+    close: 'Close', cancel: 'Cancel',
+    great_job: 'Great job!', workout_completed: 'Workout completed',
+    chart_progress: 'Progress', chart_current: 'Current',
+    chart_max: 'Max', chart_change: 'Change',
+    history: 'History', history_sets: 'Sets history',
+    personal_records: 'Personal records',
+    record_max_weight: 'Max weight', record_max_reps: 'Max reps',
+    record_max_tonnage: 'Max volume',
+    show_1rm: 'Show 1RM estimate', hide_1rm: 'Hide 1RM estimate',
+    one_rm_title: '1RM estimate',
+    one_rm_desc: 'One-rep max (Epley formula). Approximate estimate of your max weight for one rep.',
+    new_measure: 'New measurement', edit_measure: 'Edit measurement',
+    measures_empty: 'No measurements yet', measures_hint: 'Tap "New measurement" to add',
+    date: 'Date', values: 'Values',
+    add_field: 'Add field', new_field: 'New field',
+    field_name: 'Field name', field_unit: 'Unit',
+    field_name_placeholder: 'E.g., Neck',
+    unit_placeholder: 'cm, kg, mm, %',
+    edit_field: 'Edit field',
+    delete_field_confirm: 'Delete this field? Values in past measurements will be preserved.',
+    fields: 'Measurement fields', manage_fields: 'Manage fields',
+    set_weight_placeholder: 'kg', set_reps_placeholder: 'reps',
+    set_min_placeholder: 'min', set_km_placeholder: 'km', set_sec_placeholder: 'sec',
+    theme: 'Theme', theme_dark: 'Dark', theme_dim: 'Dim', theme_light: 'Light', theme_auto: 'Auto',
+    language: 'Language',
+    units: 'Units',
+    app_color: 'App color',
+    vibration: 'Vibration', vibration_desc: 'Light haptic feedback',
+    body_weight: 'Body weight', body_weight_desc: 'For calorie estimation',
+    on: 'On', off: 'Off',
+    sync: 'Sync', sync_desc: 'Cloud data storage',
+    reminders: 'Reminders', reminders_desc: 'Workout notifications',
+    export_import: 'Export & import', export_import_desc: 'Backup of your data',
+    export_data: 'Save data to file',
+    import_data: 'Load data from file',
+    export_data_desc: 'Download all workouts and measurements',
+    import_data_desc: 'Restore from a backup file',
+    export_btn: 'Download',
+    import_btn: 'Upload',
+    import_confirm: 'Import will replace current data. Continue?',
+    import_success: 'Data loaded successfully',
+    import_error: 'Failed to read file',
+    about: 'About', about_desc: 'Version and info',
+    version: 'Version', soon: 'Soon',
+    settings_section_general: 'General',
+    settings_section_units: 'Units',
+    settings_section_account: 'Data',
+    settings_section_about: 'About',
+    settings_section_workout: 'Workout',
+    danger_zone: 'Danger zone',
+    clear_data: 'Clear all data',
+    clear_data_desc: 'Delete workouts, measurements and settings',
+    clear_data_confirm: 'Delete ALL data? This cannot be undone.',
+    cleared: 'All data cleared',
+    add_selected: 'Add', selected_count: 'selected',
+    no_data: 'No data.',
+    chart_no_data: 'No data yet. Log a workout with weight.',
+    delete: 'Delete', duplicate: 'Duplicate set',
+    delete_set_confirm: 'Delete set?',
+    delete_exercise_confirm: 'Delete exercise?',
+    rest_timer: 'Rest timer',
+    rest_timer_desc: 'Countdown after each set',
+    rest_duration: 'Rest duration',
+    rest_duration_desc: 'Seconds to rest between sets',
+    rest_sound: 'Timer sound',
+    rest_sound_desc: 'Double beep when rest ends',
+    rest_done: 'Rest complete',
+    skip_rest: 'Skip',
+    open_chart: 'Chart',
+    superset_create: 'Group with...',
+    superset_remove: 'Remove from group',
+    superset_dissolve: 'Ungroup',
+    superset_choose: 'Select exercises to group',
+    superset_only_mine: 'You can group only current workout exercises',
+    rename: 'Rename',
+    delete_exercise: 'Delete exercise',
+    action_menu: 'Actions',
+    coach_report: 'Coach report',
+    share_text: 'Share as text',
+    download_txt: 'Download .txt',
+    copy: 'Copy',
+    copied: 'Copied',
+  },
+};
+
+const EXERCISE_TRANSLATIONS = {
+  'Грудь': 'Chest', 'Спина': 'Back', 'Ноги': 'Legs',
+  'Плечи': 'Shoulders', 'Бицепс': 'Biceps', 'Трицепс': 'Triceps',
+  'Пресс': 'Abs', 'Кардио': 'Cardio',
+  'Жим штанги лёжа': 'Barbell bench press',
+  'Жим штанги на наклонной': 'Incline barbell press',
+  'Жим гантелей лёжа': 'Dumbbell bench press',
+  'Жим гантелей на наклонной': 'Incline dumbbell press',
+  'Разводка гантелей лёжа': 'Dumbbell flyes',
+  'Сведение рук в кроссовере': 'Cable crossover',
+  'Отжимания на брусьях': 'Dips',
+  'Отжимания от пола': 'Push-ups',
+  'Становая тяга': 'Deadlift',
+  'Тяга штанги в наклоне': 'Bent-over row',
+  'Подтягивания': 'Pull-ups',
+  'Тяга Т-грифа': 'T-bar row',
+  'Тяга гантели одной рукой': 'One-arm dumbbell row',
+  'Тяга верхнего блока': 'Lat pulldown',
+  'Тяга нижнего блока': 'Seated cable row',
+  'Гиперэкстензия': 'Hyperextension',
+  'Шраги со штангой': 'Barbell shrugs',
+  'Шраги с гантелями': 'Dumbbell shrugs',
+  'Присед со штангой': 'Barbell squat',
+  'Фронтальный присед': 'Front squat',
+  'Жим ногами': 'Leg press',
+  'Румынская тяга': 'Romanian deadlift',
+  'Болгарские выпады': 'Bulgarian split squat',
+  'Выпады с гантелями': 'Dumbbell lunges',
+  'Разгибания ног в тренажёре': 'Leg extensions',
+  'Сгибания ног лёжа': 'Lying leg curls',
+  'Подъёмы на носки стоя': 'Standing calf raises',
+  'Подъёмы на носки сидя': 'Seated calf raises',
+  'Ягодичный мост со штангой': 'Barbell glute bridge',
+  'Ягодичный мост в тренажёре': 'Machine glute bridge',
+  'Жим штанги стоя': 'Overhead press',
+  'Жим штанги сидя': 'Seated barbell press',
+  'Жим гантелей сидя': 'Seated dumbbell press',
+  'Жим Арнольда': 'Arnold press',
+  'Тяга к подбородку': 'Upright row',
+  'Махи гантелями в стороны': 'Lateral raises',
+  'Махи гантелями в наклонe': 'Bent-over lateral raises',
+  'Подъём штанги на бицепс': 'Barbell curl',
+  'Подъём EZ-штанги': 'EZ-bar curl',
+  'Подъём гантелей поочерёдно': 'Alternating dumbbell curl',
+  'Молотки': 'Hammer curls',
+  'Сгибания на скамье Скотта': 'Preacher curl',
+  'Сгибания в кроссовере': 'Cable curl',
+  'Концентрированные сгибания': 'Concentration curl',
+  'Французский жим лёжа': 'Lying triceps extension',
+  'Разгибания на блоке': 'Triceps pushdown',
+  'Разгибания гантели из-за головы': 'Overhead dumbbell extension',
+  'Жим узким хватом': 'Close-grip bench press',
+  'Подъём ног в висе': 'Hanging leg raises',
+  'Подъём ног лёжа': 'Lying leg raises',
+  'Скручивания на наклонной': 'Incline crunches',
+  'Скручивания': 'Crunches',
+  'Планка': 'Plank',
+  'Боковая планка': 'Side plank',
+  'Бег на дорожке': 'Treadmill run',
+  'Ходьба в горку': 'Incline walk',
+  'Эллиптический тренажёр': 'Elliptical',
+  'Велотренажёр': 'Stationary bike',
+  'Гребной тренажёр': 'Rowing machine',
+  'Скакалка': 'Jump rope',
+  'Бёрпи': 'Burpees',
+};
+function translateExercise(name, lang) {
+  if (lang === 'ru') return name;
+  return EXERCISE_TRANSLATIONS[name] || name;
+}
+
+/* ============ ЕДИНИЦЫ ============ */
+const KG_TO_LB = 2.20462;
+const KM_TO_MI = 0.621371;
+function displayWeight(kg, units) { return units === 'imperial' ? kg * KG_TO_LB : kg; }
+function displayDistance(km, units) { return units === 'imperial' ? km * KM_TO_MI : km; }
+function inputToKg(value, units) { return units === 'imperial' ? value / KG_TO_LB : value; }
+function inputToKm(value, units) { return units === 'imperial' ? value / KM_TO_MI : value; }
+function distanceUnit(units) { return units === 'imperial' ? 'миль' : 'км'; }
+function calc1RM(weight, reps) {
+  if (!weight || !reps) return 0;
+  return weight * (1 + reps / 30);
+}
+
+/* ============ БАЗА УПРАЖНЕНИЙ ============ */
+const DEFAULT_CATALOG = [
+  { id: 'chest', name: 'Грудь', exercises: ['Жим штанги лёжа','Жим штанги на наклонной','Жим гантелей лёжа','Жим гантелей на наклонной','Разводка гантелей лёжа','Сведение рук в кроссовере','Отжимания на брусьях','Отжимания от пола'] },
+  { id: 'back', name: 'Спина', exercises: ['Становая тяга','Тяга штанги в наклоне','Подтягивания','Тяга Т-грифа','Тяга гантели одной рукой','Тяга верхнего блока','Тяга нижнего блока','Гиперэкстензия','Шраги со штангой','Шраги с гантелями'] },
+  { id: 'legs', name: 'Ноги', exercises: ['Присед со штангой','Фронтальный присед','Жим ногами','Румынская тяга','Болгарские выпады','Выпады с гантелями','Разгибания ног в тренажёре','Сгибания ног лёжа','Подъёмы на носки стоя','Подъёмы на носки сидя','Ягодичный мост со штангой','Ягодичный мост в тренажёре'] },
+  { id: 'shoulders', name: 'Плечи', exercises: ['Жим штанги стоя','Жим штанги сидя','Жим гантелей сидя','Жим Арнольда','Тяга к подбородку','Махи гантелями в стороны','Махи гантелями в наклоне'] },
+  { id: 'biceps', name: 'Бицепс', exercises: ['Подъём штанги на бицепс','Подъём EZ-штанги','Подъём гантелей поочерёдно','Молотки','Сгибания на скамье Скотта','Сгибания в кроссовере','Концентрированные сгибания'] },
+  { id: 'triceps', name: 'Трицепс', exercises: ['Отжимания на брусьях','Французский жим лёжа','Разгибания на блоке','Разгибания гантели из-за головы','Жим узким хватом'] },
+  { id: 'abs', name: 'Пресс', exercises: ['Подъём ног в висе','Подъём ног лёжа','Скручивания на наклонной','Скручивания','Планка','Боковая планка'] },
+  { id: 'cardio', name: 'Кардио', exercises: ['Бег на дорожке','Ходьба в горку','Эллиптический тренажёр','Велотренажёр','Гребной тренажёр','Скакалка','Бёрпи'] },
+];
+
+const DEFAULT_MEASURE_FIELDS = [
+  { key: 'weight', label: 'Вес',    unit: 'кг' },
+  { key: 'chest',  label: 'Грудь',  unit: 'см' },
+  { key: 'waist',  label: 'Талия',  unit: 'см' },
+  { key: 'hips',   label: 'Бёдра',  unit: 'см' },
+  { key: 'bicep',  label: 'Бицепс', unit: 'см' },
+  { key: 'thigh',  label: 'Бедро',  unit: 'см' },
+  { key: 'calf',   label: 'Голень', unit: 'см' },
+  { key: 'neck',   label: 'Шея',    unit: 'см' },
+];
+
+/* ============ ДАТЫ И ФОРМАТ ============ */
+function dateKey(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+function getWeek(offset) {
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i + offset * 7);
+    days.push(d);
+  }
+  return days;
+}
+function parseDateKey(key) { return new Date(key + 'T00:00:00'); }
+function fmtNum(n, lang) {
+  if (typeof n !== 'number' || isNaN(n)) return '0';
+  if (!lang) {
+    try {
+      const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+      lang = s.language || 'ru';
+    } catch { lang = 'ru'; }
+  }
+  const rounded = Math.round(n * 10) / 10;
+  const locale = lang === 'en' ? 'en-US' : 'ru-RU';
+  return rounded.toLocaleString(locale, { maximumFractionDigits: 1 });
+}
+function fmtDuration(seconds) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  if (h > 0) return `${h} ч ${m} мин`;
+  if (m > 0) return `${m} мин ${s} сек`;
+  return `${s} сек`;
+}
+function fmtTimer(seconds) {
+  const sec = Math.max(0, Math.floor(seconds || 0));
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  const pad = n => String(n).padStart(2, '0');
+  return h > 0 ? `${h}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
+}
+function setTonnage(s) { return (Number(s.weight) || 0) * (Number(s.reps) || 0); }
+function exerciseTonnage(ex) {
+  if (ex.type === EX_TYPE.STRENGTH) return ex.sets.reduce((sum, s) => sum + setTonnage(s), 0);
+  return 0;
+}
+function workoutTonnage(exercises) { return exercises.reduce((sum, ex) => sum + exerciseTonnage(ex), 0); }
+function totalSets(exercises) { return exercises.reduce((sum, ex) => sum + ex.sets.length, 0); }
+function getMuscleGroups(exercises, catalog) {
+  const groups = new Set();
+  exercises.forEach(ex => {
+    catalog.forEach(cat => { if (cat.exercises.includes(ex.name)) groups.add(cat.id); });
+  });
+  return Array.from(groups);
+}
+function vibrate(pattern, enabled) {
+  if (!enabled) return;
+  if ('vibrate' in navigator) { try { navigator.vibrate(pattern); } catch (e) {} }
+}
+const VIBRATE_LIGHT = 15;
+const VIBRATE_MEDIUM = 30;
+const VIBRATE_STRONG = [40, 30, 40];
+
+/* ============ ХУКИ СВАЙПОВ ============ */
+function useSwipeDown(onClose) {
+  const ref = useRef(null);
+  const startY = useRef(null);
+  const currentY = useRef(null);
+  const isDragging = useRef(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    function onTouchStart(e) {
+      const rect = el.getBoundingClientRect();
+      const y = e.touches[0].clientY;
+      if (y - rect.top > 80) return;
+      if (el.scrollTop > 0) return;
+      startY.current = y; currentY.current = y;
+      isDragging.current = false;
+      el.style.transition = 'none';
+    }
+    function onTouchMove(e) {
+      if (startY.current == null) return;
+      currentY.current = e.touches[0].clientY;
+      const dy = currentY.current - startY.current;
+      if (!isDragging.current && dy > 5) isDragging.current = true;
+      if (isDragging.current && dy > 0) el.style.transform = `translateY(${dy}px)`;
+    }
+    function onTouchEnd() {
+      if (startY.current == null) return;
+      const dy = currentY.current - startY.current;
+      el.style.transition = 'transform 0.2s';
+      if (isDragging.current && dy > 100) {
+        el.style.transform = 'translateY(100%)';
+        setTimeout(onClose, 150);
+      } else {
+        el.style.transform = 'translateY(0)';
+      }
+      startY.current = null; currentY.current = null; isDragging.current = false;
+    }
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchmove', onTouchMove, { passive: true });
+    el.addEventListener('touchend', onTouchEnd);
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+      el.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [onClose]);
+  return ref;
+}
+
+function useSwipeLeft(onDelete) {
+  const ref = useRef(null);
+  const startX = useRef(null);
+  const startY = useRef(null);
+  const isDragging = useRef(false);
+  const AUTO_DELETE = 140;
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    function onTouchStart(e) {
+      startX.current = e.touches[0].clientX;
+      startY.current = e.touches[0].clientY;
+      isDragging.current = false;
+      el.style.transition = 'none';
+    }
+    function onTouchMove(e) {
+      if (startX.current == null) return;
+      const dx = e.touches[0].clientX - startX.current;
+      const dy = e.touches[0].clientY - startY.current;
+      if (!isDragging.current && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        isDragging.current = true;
+      }
+      if (isDragging.current) {
+        e.stopPropagation();
+        const clamped = Math.max(-AUTO_DELETE, Math.min(0, dx));
+        el.style.transform = `translateX(${clamped}px)`;
+      }
+    }
+    function onTouchEnd(e) {
+      if (!isDragging.current) { startX.current = null; return; }
+      e.stopPropagation();
+      const transform = el.style.transform;
+      const match = transform.match(/translateX\((-?\d+(?:\.\d+)?)px\)/);
+      const tx = match ? parseFloat(match[1]) : 0;
+      el.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      el.style.transform = 'translateX(0)';
+      if (tx <= -AUTO_DELETE * 0.6) {
+        setTimeout(() => onDelete(), 100);
+      }
+      startX.current = null;
+      isDragging.current = false;
+    }
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchmove', onTouchMove, { passive: true });
+    el.addEventListener('touchend', onTouchEnd);
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+      el.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [onDelete]);
+  return ref;
+}
+
+function useLongPressDrag(items, onReorder) {
+  const [draggingId, setDraggingId] = useState(null);
+  const [dragOverIndex, setDragOverIndex] = useState(null);
+  const timerRef = useRef(null);
+  const startIndexRef = useRef(null);
+  const startPosRef = useRef(null);
+  const itemRectsRef = useRef([]);
+  const draggingIdRef = useRef(null);
+  const currentOverIndexRef = useRef(null);
+
+  function getHandleHandlers(item, index) {
+    const itemId = typeof item === 'object' ? (item.id || item.name || item.key) : item;
+    return {
+      onTouchStart: (e) => {
+        e.stopPropagation();
+        startPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        startIndexRef.current = index;
+        currentOverIndexRef.current = index;
+        timerRef.current = setTimeout(() => {
+          if (!startPosRef.current) return;
+          if ('vibrate' in navigator) { try { navigator.vibrate(VIBRATE_LIGHT); } catch {} }
+          setDraggingId(itemId);
+          draggingIdRef.current = itemId;
+          setDragOverIndex(index);
+          requestAnimationFrame(() => {
+            const all = document.querySelectorAll('[data-drag-id]');
+            itemRectsRef.current = Array.from(all).map(el => ({
+              id: el.getAttribute('data-drag-id'),
+              rect: el.getBoundingClientRect(),
+            }));
+          });
+        }, 350);
+      },
+      onTouchMove: (e) => {
+        e.stopPropagation();
+        if (timerRef.current && startPosRef.current && draggingIdRef.current == null) {
+          const dx = e.touches[0].clientX - startPosRef.current.x;
+          const dy = e.touches[0].clientY - startPosRef.current.y;
+          if (Math.abs(dx) > 6 || Math.abs(dy) > 6) {
+            clearTimeout(timerRef.current);
+            timerRef.current = null;
+            startPosRef.current = null;
+          }
+        }
+        if (draggingIdRef.current == null) return;
+        e.preventDefault();
+        const y = e.touches[0].clientY;
+        let targetIdx = null;
+        itemRectsRef.current.forEach((item, idx) => {
+          const r = item.rect;
+          if (y >= r.top && y <= r.bottom) targetIdx = idx;
+        });
+        if (itemRectsRef.current.length > 0) {
+          if (y < itemRectsRef.current[0].rect.top) targetIdx = 0;
+          if (y > itemRectsRef.current[itemRectsRef.current.length - 1].rect.bottom)
+            targetIdx = itemRectsRef.current.length - 1;
+        }
+        if (targetIdx != null) {
+          setDragOverIndex(targetIdx);
+          currentOverIndexRef.current = targetIdx;
+        }
+      },
+      onTouchEnd: (e) => {
+        e.stopPropagation();
+        if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; }
+        if (draggingIdRef.current != null && currentOverIndexRef.current != null && currentOverIndexRef.current !== startIndexRef.current) {
+          onReorder(startIndexRef.current, currentOverIndexRef.current);
+        }
+        setDraggingId(null); setDragOverIndex(null);
+        draggingIdRef.current = null;
+        startPosRef.current = null;
+        currentOverIndexRef.current = null;
+      },
+    };
+  }
+  return { draggingId, dragOverIndex, getHandleHandlers };
+}
+
+function useRestTimer(settings) {
+  const [restState, setRestState] = useState(null);
+
+  useEffect(() => {
+    if (!restState) return;
+    const int = setInterval(() => {
+      const remaining = Math.max(0, Math.ceil((restState.endedAt - Date.now()) / 1000));
+      if (remaining <= 0 && !restState.done) {
+        vibrate([100, 80, 100], settings.vibration);
+        playRestDoneSound(settings.restSoundEnabled);
+        setRestState(prev => prev ? { ...prev, done: true, endedAt: Date.now() + 3000 } : null);
+      }
+    }, 500);
+    return () => clearInterval(int);
+  }, [restState, settings.vibration, settings.restSoundEnabled]);
+
+  function startRest(exerciseId, setId) {
+    if (!settings.restTimerEnabled) return;
+    const duration = settings.restDuration || 120;
+    setRestState(prev => {
+      if (prev && prev.setId === setId && !prev.done) {
+        return prev;
+      }
+      return {
+        endedAt: Date.now() + duration * 1000,
+        total: duration,
+        exerciseId, setId,
+        done: false,
+      };
+    });
+  }
+
+  function skipRest() {
+    setRestState(null);
+  }
+
+  function getRemaining() {
+    if (!restState) return 0;
+    return Math.max(0, Math.ceil((restState.endedAt - Date.now()) / 1000));
+  }
+
+  return { restState, startRest, skipRest, getRemaining };
+}
+
+/* ============ КОНТЕКСТ ============ */
+const SettingsContext = React.createContext(null);
+function useSettings() { return React.useContext(SettingsContext); }
+function useT() {
+  const { settings } = useSettings();
+  const lang = settings.language || 'ru';
+  return (key) => (I18N[lang] && I18N[lang][key]) || key;
+}
+
+/* ============ ГЛАВНЫЙ APP ============ */
+function App() {
+  const [tab, setTab] = useState('workouts');
+  const [settings, setSettings] = useState({
+    theme: 'dark', language: 'ru', units: 'metric',
+    vibration: true, accent: 'purple',
+    restTimerEnabled: true, restDuration: 120, restSoundEnabled: true,
+  });
+  const [measureFields, setMeasureFields] = useState(DEFAULT_MEASURE_FIELDS);
+
+  useEffect(() => {
+    const s = localStorage.getItem(SETTINGS_KEY);
+    if (s) try { setSettings(prev => ({ ...prev, ...JSON.parse(s) })); } catch {}
+    const mf = localStorage.getItem(MEASURE_FIELDS_KEY);
+    if (mf) try { setMeasureFields(JSON.parse(mf)); } catch {}
+  }, []);
+  useEffect(() => { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); }, [settings]);
+  useEffect(() => { localStorage.setItem(MEASURE_FIELDS_KEY, JSON.stringify(measureFields)); }, [measureFields]);
+  useEffect(() => {
+    const root = document.documentElement;
+    let actualTheme = settings.theme;
+    if (settings.theme === 'auto') {
+      actualTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    root.setAttribute('data-theme', actualTheme);
+    root.setAttribute('data-accent', settings.accent || 'purple');
+    const accentColors = {
+      purple: '#a78bfa', indigo: '#818cf8', blue: '#7dd3fc',
+      teal: '#5eead4', mint: '#86efac', green: '#6ee7b7',
+      lime: '#bef264', yellow: '#fde68a', orange: '#fdba74',
+      coral: '#fca5a5', pink: '#f9a8d4', rose: '#f0abfc',
+    };
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) metaTheme.setAttribute('content', accentColors[settings.accent] || '#a78bfa');
+  }, [settings.theme, settings.accent]);
+  useEffect(() => {
+    if (settings.theme !== 'auto') return;
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    function handler() {
+      const actualTheme = mq.matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', actualTheme);
+    }
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, [settings.theme]);
+
+  return (
+    <SettingsContext.Provider value={{ settings, setSettings, measureFields, setMeasureFields }}>
+      <div className="container">
+        <div className="top-tabs">
+          <button className={`top-tab ${tab === 'workouts' ? 'active' : ''}`}
+            onClick={() => setTab('workouts')}>
+            <Icon name="dumbbell" /> {settings.language === 'en' ? 'Workouts' : 'Тренировки'}
+          </button>
+          <button className={`top-tab ${tab === 'measures' ? 'active' : ''}`}
+            onClick={() => setTab('measures')}>
+            <Icon name="ruler" /> {settings.language === 'en' ? 'Measures' : 'Замеры'}
+          </button>
+          <button className={`top-tab ${tab === 'settings' ? 'active' : ''}`}
+            onClick={() => setTab('settings')}>
+            <Icon name="settings" /> {settings.language === 'en' ? 'Settings' : 'Настройки'}
+          </button>
+        </div>
+        {tab === 'workouts' && <WorkoutsTab />}
+        {tab === 'measures' && <MeasuresTab />}
+        {tab === 'settings' && <SettingsTab />}
+      </div>
+    </SettingsContext.Provider>
+  );
+}
+
+/* ============ ОТЧЁТ ДЛЯ ТРЕНЕРА ============ */
+function buildWorkoutReportText(data, exercises, settings, t, catalog) {
+  const units = settings.units;
+  const isRu = settings.language !== 'en';
+  const dateObj = parseDateKey(data.date);
+
+  const dateStr = dateObj.toLocaleDateString(isRu ? 'ru-RU' : 'en-US',
+    { day: 'numeric', month: 'long', year: 'numeric' });
+  const wdStr = dateObj.toLocaleDateString(isRu ? 'ru-RU' : 'en-US', { weekday: 'long' });
+
+  const lines = [];
+  const sep = '─'.repeat(40);
+
+  lines.push(isRu ? 'Reps — Отчёт о тренировке' : 'Reps — Workout report');
+  lines.push('='.repeat(40));
+  lines.push('');
+  lines.push(`${isRu ? 'Дата' : 'Date'}: ${dateStr} (${wdStr})${data.startTime ? ', ' + data.startTime : ''}`);
+  if (data.duration > 0) {
+    lines.push(`${isRu ? 'Длительность' : 'Duration'}: ${fmtDuration(data.duration)}`);
+  }
+
+  const tonnage = workoutTonnage(exercises);
+  if (tonnage > 0) {
+    lines.push(`${isRu ? 'Тоннаж' : 'Volume'}: ${fmtNum(tonnage)} ${isRu ? 'кг' : 'kg'}`);
+  }
+
+  const sets = totalSets(exercises);
+  lines.push(`${isRu ? 'Упражнений' : 'Exercises'}: ${exercises.length} · ${isRu ? 'Подходов' : 'Sets'}: ${sets}`);
+
+  const muscles = getMuscleGroups(exercises, catalog || []);
+  if (muscles.length > 0) {
+    const names = muscles.map(id => {
+      const cat = (catalog || []).find(c => c.id === id);
+      return cat ? translateExercise(cat.name, settings.language) : id;
+    });
+    lines.push(`${isRu ? 'Группы мышц' : 'Muscle groups'}: ${names.join(', ')}`);
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('');
+
+  let num = 0;
+  exercises.forEach(ex => {
+    const validSets = ex.sets.filter(s =>
+      (Number(s.weight) || 0) > 0 || (Number(s.reps) || 0) > 0 ||
+      (Number(s.min) || 0) > 0 || (Number(s.km) || 0) > 0 ||
+      (Number(s.sec) || 0) > 0
+    );
+    if (validSets.length === 0) return;
+    num++;
+
+    const exName = translateExercise(ex.name, settings.language);
+    lines.push(`${num}. ${exName}`);
+
+    validSets.forEach((s, i) => {
+      let setStr = '';
+      if (ex.type === EX_TYPE.STRENGTH) {
+        const w = displayWeight(Number(s.weight) || 0, units);
+        const r = Number(s.reps) || 0;
+        setStr = `${fmtNum(w)} ${isRu ? 'кг' : 'kg'} × ${r}`;
+      } else if (ex.type === EX_TYPE.CARDIO) {
+        const m = Number(s.min) || 0;
+        const km = displayDistance(Number(s.km) || 0, units);
+        setStr = `${m} ${isRu ? 'мин' : 'min'} × ${fmtNum(km)} ${isRu ? 'км' : 'km'}`;
+      } else if (ex.type === EX_TYPE.TIME) {
+        setStr = `${Number(s.sec) || 0} ${isRu ? 'сек' : 'sec'}`;
+      }
+      const label = isRu ? 'Подход' : 'Set';
+      lines.push(`   ${label} ${i + 1}: ${setStr}`);
+    });
+    lines.push('');
+  });
+
+  lines.push(sep);
+  lines.push(isRu ? 'Сгенерировано в Reps' : 'Generated by Reps');
+
+  return lines.join('\n');
+}
+
+function downloadTextFile(text, filename) {
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function shareText(text, title = 'Reps — Workout report') {
+  if (navigator.share) {
+    try {
+      await navigator.share({ title, text });
+      return true;
+    } catch (e) {
+      if (e.name === 'AbortError') return true;
+    }
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    alert('Скопировано в буфер обмена');
+    return true;
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); alert('Скопировано в буфер обмена'); }
+    catch { alert('Не удалось скопировать'); }
+    document.body.removeChild(ta);
+    return false;
+  }
+}
+
+/* ============ ХЕЛПЕРЫ ДЛЯ ОТЧЁТА/ШАРИНГА ============ */
+function buildResultData(result, catalog, settings, t) {
+  const units = settings.units;
+  const startTime = new Date(result.startedAt).toLocaleTimeString(
+    settings.language === 'en' ? 'en-US' : 'ru-RU', { hour: '2-digit', minute: '2-digit' });
+
+  const exs = result.exercises || [];
+  const totalKm = exs.filter(e => e.type === EX_TYPE.CARDIO)
+    .reduce((s, e) => s + e.sets.reduce((a, x) => a + (Number(x.km) || 0), 0), 0);
+  const totalCardioMin = exs.filter(e => e.type === EX_TYPE.CARDIO)
+    .reduce((s, e) => s + e.sets.reduce((a, x) => a + (Number(x.min) || 0), 0), 0);
+  const totalTimeSec = exs.filter(e => e.type === EX_TYPE.TIME)
+    .reduce((s, e) => s + e.sets.reduce((a, x) => a + (Number(x.sec) || 0), 0), 0);
+
+  const hasStrength = result.tonnage > 0;
+  const mainLabel = hasStrength ? t('tonnage') : totalKm > 0 ? t('distance') : t('seconds');
+  const mainIcon = hasStrength ? 'dumbbell' : totalKm > 0 ? 'run' : 'timer';
+  const mainValue = hasStrength
+    ? <>{fmtNum(result.tonnage)}</>
+    : totalKm > 0
+      ? <>{fmtNum(displayDistance(totalKm, units))}<small>{distanceUnit(units)}</small></>
+      : <>{Math.round(totalTimeSec)}<small>сек</small></>;
+
+  const muscleNames = result.muscles.map(id => {
+    const cat = (result.catalog || DEFAULT_CATALOG).find(c => c.id === id);
+    return cat ? translateExercise(cat.name, settings.language) : id;
+  });
+
+  return {
+    date: result.date, startTime,
+    duration: result.duration,
+    exercisesCount: result.exercisesCount,
+    sets: result.sets,
+    totalCardioMin, totalTimeSec,
+    mainLabel, mainIcon, mainValue,
+    muscleNames,
+  };
+}
+
+function buildDayShareData(date, exercises, meta, catalog, settings, t) {
+  const units = settings.units;
+  const duration = meta?.duration || 0;
+  const startedAt = meta?.startedAt || null;
+  const startTime = startedAt
+    ? new Date(startedAt).toLocaleTimeString(
+        settings.language === 'en' ? 'en-US' : 'ru-RU', { hour: '2-digit', minute: '2-digit' })
+    : null;
+
+  const tonnage = workoutTonnage(exercises);
+  const sets = totalSets(exercises);
+  const exercisesCount = exercises.length;
+  const muscles = getMuscleGroups(exercises, catalog);
+
+  const totalKm = exercises.filter(e => e.type === EX_TYPE.CARDIO)
+    .reduce((s, e) => s + e.sets.reduce((a, x) => a + (Number(x.km) || 0), 0), 0);
+  const totalCardioMin = exercises.filter(e => e.type === EX_TYPE.CARDIO)
+    .reduce((s, e) => s + e.sets.reduce((a, x) => a + (Number(x.min) || 0), 0), 0);
+  const totalTimeSec = exercises.filter(e => e.type === EX_TYPE.TIME)
+    .reduce((s, e) => s + e.sets.reduce((a, x) => a + (Number(x.sec) || 0), 0), 0);
+
+  const hasStrength = tonnage > 0;
+  const mainLabel = hasStrength ? t('tonnage') : totalKm > 0 ? t('distance') : t('seconds');
+  const mainIcon = hasStrength ? 'dumbbell' : totalKm > 0 ? 'run' : 'timer';
+  const mainValue = hasStrength
+    ? <>{fmtNum(tonnage)}</>
+    : totalKm > 0
+      ? <>{fmtNum(displayDistance(totalKm, units))}<small>{distanceUnit(units)}</small></>
+      : <>{Math.round(totalTimeSec)}<small>сек</small></>;
+
+  const muscleNames = muscles.map(id => {
+    const cat = catalog.find(c => c.id === id);
+    return cat ? translateExercise(cat.name, settings.language) : id;
+  });
+
+  return {
+    date, startTime, duration,
+    exercisesCount, sets,
+    totalCardioMin, totalTimeSec,
+    mainLabel, mainIcon, mainValue,
+    muscleNames,
+  };
+}
+
+/* ============ НАСТРОЙКИ ============ */
+function SettingsTab() {
+  const { settings, setSettings } = useSettings();
+  const t = useT();
+  const fileInputRef = useRef(null);
+
+  function clearAll() {
+    if (!confirm(t('clear_data_confirm'))) return;
+    [WORKOUTS_KEY, CATALOG_KEY, TEMPLATES_KEY, ACTIVE_KEY,
+     MEASURES_KEY, MEASURE_FIELDS_KEY, COLLAPSED_KEY, SETTINGS_KEY]
+      .forEach(k => localStorage.removeItem(k));
+    alert(t('cleared'));
+    location.reload();
+  }
+
+  function exportData() {
+    const data = {};
+    [WORKOUTS_KEY, CATALOG_KEY, TEMPLATES_KEY, MEASURES_KEY, MEASURE_FIELDS_KEY, SETTINGS_KEY].forEach(k => {
+      const v = localStorage.getItem(k);
+      if (v) data[k] = v;
+    });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const date = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `reps-backup-${date}.json`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function importData(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!confirm(t('import_confirm'))) { e.target.value = ''; return; }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const data = JSON.parse(event.target.result);
+        Object.keys(data).forEach(k => {
+          if (typeof data[k] === 'string') localStorage.setItem(k, data[k]);
+        });
+        alert(t('import_success'));
+        location.reload();
+      } catch (err) { alert(t('import_error')); }
+    };
+    reader.readAsText(file);
+  }
+
+  const accentColors = [
+    { id: 'purple', color: '#a78bfa' },
+    { id: 'indigo', color: '#818cf8' },
+    { id: 'blue',   color: '#7dd3fc' },
+    { id: 'teal',   color: '#5eead4' },
+    { id: 'mint',   color: '#86efac' },
+    { id: 'green',  color: '#6ee7b7' },
+    { id: 'lime',   color: '#bef264' },
+    { id: 'yellow', color: '#fde68a' },
+    { id: 'orange', color: '#fdba74' },
+    { id: 'coral',  color: '#fca5a5' },
+    { id: 'pink',   color: '#f9a8d4' },
+    { id: 'rose',   color: '#f0abfc' },
+  ];
+
+  return (
+    <>
+      <div className="settings-section">
+        <div className="settings-section-title">{t('settings_section_general')}</div>
+
+        <div className="settings-row" style={{ cursor: 'default' }}>
+          <div className="settings-icon"><Icon name="palette" /></div>
+          <div className="settings-info"><div className="settings-label">{t('theme')}</div></div>
+        </div>
+        <div style={{ padding: '0 20px 16px' }}>
+          <div className="segmented" style={{ margin: 0 }}>
+            <button className={settings.theme === 'dark' ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, theme: 'dark' })}>
+              <Icon name="moon" /> {t('theme_dark')}
+            </button>
+            <button className={settings.theme === 'dim' ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, theme: 'dim' })}>
+              <Icon name="dim" /> {t('theme_dim')}
+            </button>
+            <button className={settings.theme === 'light' ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, theme: 'light' })}>
+              <Icon name="sun" /> {t('theme_light')}
+            </button>
+            <button className={settings.theme === 'auto' ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, theme: 'auto' })}>
+              <Icon name="auto" /> {t('theme_auto')}
+            </button>
+          </div>
+        </div>
+
+        <div className="settings-row" style={{ cursor: 'default' }}>
+          <div className="settings-icon"><Icon name="palette" /></div>
+          <div className="settings-info"><div className="settings-label">{t('app_color')}</div></div>
+        </div>
+        <div className="color-picker">
+          {accentColors.map(c => (
+            <div key={c.id}
+              className={`color-dot ${settings.accent === c.id ? 'active' : ''}`}
+              style={{ background: c.color }}
+              onClick={() => setSettings({ ...settings, accent: c.id })}
+            />
+          ))}
+        </div>
+
+        <div className="settings-row" style={{ cursor: 'default' }}>
+          <div className="settings-icon"><Icon name="globe" /></div>
+          <div className="settings-info"><div className="settings-label">{t('language')}</div></div>
+        </div>
+        <div style={{ padding: '0 20px 16px' }}>
+          <div className="segmented" style={{ margin: 0 }}>
+            <button className={settings.language === 'ru' ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, language: 'ru' })}>
+              <Icon name="globe" /> RU
+            </button>
+            <button className={settings.language === 'en' ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, language: 'en' })}>
+              <Icon name="globe" /> EN
+            </button>
+          </div>
+        </div>
+
+        <div className="settings-row" style={{ cursor: 'default' }}>
+          <div className="settings-icon"><Icon name="waves" /></div>
+          <div className="settings-info">
+            <div className="settings-label">{t('vibration')}</div>
+            <div className="settings-sub">{t('vibration_desc')}</div>
+          </div>
+        </div>
+        <div style={{ padding: '0 20px 16px' }}>
+          <div className="segmented" style={{ margin: 0 }}>
+            <button className={settings.vibration ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, vibration: true })}>{t('on')}</button>
+            <button className={!settings.vibration ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, vibration: false })}>{t('off')}</button>
+          </div>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <div className="settings-section-title">{t('settings_section_units')}</div>
+        <div className="settings-row" style={{ cursor: 'default' }}>
+          <div className="settings-icon"><Icon name="ruler" /></div>
+          <div className="settings-info">
+            <div className="settings-label">{t('units')}</div>
+            <div className="settings-sub">{settings.units === 'imperial' ? 'lb, mi' : 'kg, km'}</div>
+          </div>
+        </div>
+        <div style={{ padding: '0 20px 16px' }}>
+          <div className="segmented" style={{ margin: 0 }}>
+            <button className={settings.units === 'metric' ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, units: 'metric' })}>кг / км</button>
+            <button className={settings.units === 'imperial' ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, units: 'imperial' })}>lb / mi</button>
+          </div>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <div className="settings-section-title">{t('settings_section_workout')}</div>
+
+        <div className="settings-row" style={{ cursor: 'default' }}>
+          <div className="settings-icon"><Icon name="clock" /></div>
+          <div className="settings-info">
+            <div className="settings-label">{t('rest_timer')}</div>
+            <div className="settings-sub">{t('rest_timer_desc')}</div>
+          </div>
+        </div>
+        <div style={{ padding: '0 20px 16px' }}>
+          <div className="segmented" style={{ margin: 0 }}>
+            <button className={settings.restTimerEnabled ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, restTimerEnabled: true })}>{t('on')}</button>
+            <button className={!settings.restTimerEnabled ? 'active' : ''}
+              onClick={() => setSettings({ ...settings, restTimerEnabled: false })}>{t('off')}</button>
+          </div>
+        </div>
+
+        {settings.restTimerEnabled && (
+          <>
+            <div className="settings-row" style={{ cursor: 'default' }}>
+              <div className="settings-icon"><Icon name="timer" /></div>
+              <div className="settings-info">
+                <div className="settings-label">{t('rest_duration')}</div>
+                <div className="settings-sub">{t('rest_duration_desc')}</div>
+              </div>
+            </div>
+            <div style={{ padding: '0 20px 16px' }}>
+              <div className="segmented" style={{ margin: 0 }}>
+                {REST_PRESETS.map(sec => (
+                  <button key={sec}
+                    className={settings.restDuration === sec ? 'active' : ''}
+                    onClick={() => setSettings({ ...settings, restDuration: sec })}>
+                    {sec}с
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="settings-row" style={{ cursor: 'default' }}>
+              <div className="settings-icon"><Icon name={settings.restSoundEnabled ? 'volume' : 'volumeOff'} /></div>
+              <div className="settings-info">
+                <div className="settings-label">{t('rest_sound')}</div>
+                <div className="settings-sub">{t('rest_sound_desc')}</div>
+              </div>
+            </div>
+            <div style={{ padding: '0 20px 16px' }}>
+              <div className="segmented" style={{ margin: 0 }}>
+                <button className={settings.restSoundEnabled ? 'active' : ''}
+                  onClick={() => setSettings({ ...settings, restSoundEnabled: true })}>{t('on')}</button>
+                <button className={!settings.restSoundEnabled ? 'active' : ''}
+                  onClick={() => setSettings({ ...settings, restSoundEnabled: false })}>{t('off')}</button>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="settings-section">
+        <div className="settings-section-title">{t('settings_section_account')}</div>
+        <div className="settings-row" onClick={exportData}>
+          <div className="settings-icon"><Icon name="disk" /></div>
+          <div className="settings-info">
+            <div className="settings-label">{t('export_data')}</div>
+            <div className="settings-sub">{t('export_data_desc')}</div>
+          </div>
+          <div className="settings-value"><Icon name="share" className="icon-sm" /> {t('export_btn')}</div>
+        </div>
+        <div className="settings-row" onClick={() => fileInputRef.current && fileInputRef.current.click()}>
+          <div className="settings-icon"><Icon name="disk" /></div>
+          <div className="settings-info">
+            <div className="settings-label">{t('import_data')}</div>
+            <div className="settings-sub">{t('import_data_desc')}</div>
+          </div>
+          <div className="settings-value"><Icon name="plus" className="icon-sm" /> {t('import_btn')}</div>
+        </div>
+        <input ref={fileInputRef} type="file" accept=".json" style={{ display: 'none' }} onChange={importData} />
+      </div>
+
+      <div className="settings-section">
+        <div className="settings-section-title">{t('danger_zone')}</div>
+        <div className="settings-row" onClick={clearAll}>
+          <div className="settings-icon" style={{ color: 'var(--red)' }}><Icon name="trash" /></div>
+          <div className="settings-info">
+            <div className="settings-label" style={{ color: 'var(--red)' }}>{t('clear_data')}</div>
+            <div className="settings-sub">{t('clear_data_desc')}</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <div className="settings-section-title">{t('settings_section_about')}</div>
+        <div className="settings-row disabled">
+          <div className="settings-icon"><Logo size={20} /></div>
+          <div className="settings-info">
+            <div className="settings-label">{t('about')}</div>
+            <div className="settings-sub">Reps</div>
+          </div>
+          <div className="settings-value">v1.0</div>
+        </div>
+      </div>
+    </>
+  );
+}/* ============ ТРЕНИРОВКИ ============ */
+function WorkoutsTab() {
+  const { settings } = useSettings();
+  const t = useT();
+  const [workouts, setWorkouts] = useState({});
+  const [catalog, setCatalog] = useState(DEFAULT_CATALOG);
+  const [templates, setTemplates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(dateKey(new Date()));
+  const [weekOffset, setWeekOffset] = useState(0);
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [chartExercise, setChartExercise] = useState(null);
+  const [templatesOpen, setTemplatesOpen] = useState(false);
+  const [saveTplOpen, setSaveTplOpen] = useState(false);
+  const [shareDayOpen, setShareDayOpen] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
+  const [active, setActive] = useState(null);
+  const [now, setNow] = useState(Date.now());
+  const [result, setResult] = useState(null);
+  const [actionMenu, setActionMenu] = useState(null);
+  const [supersetPicker, setSupersetPicker] = useState(null);
+  const [collapsed, setCollapsed] = useState({});
+  const [, setTick] = useState(0);
+  const scrollTargetRef = useRef(null);
+  const calendarRef = useRef(null);
+  const { restState, startRest, skipRest, getRemaining } = useRestTimer(settings);
+
+  useEffect(() => {
+    if (!restState) return;
+    const int = setInterval(() => setTick(t => t + 1), 500);
+    return () => clearInterval(int);
+  }, [restState]);
+
+  useEffect(() => {
+    const w = localStorage.getItem(WORKOUTS_KEY);
+    const c = localStorage.getItem(CATALOG_KEY);
+    const tpl = localStorage.getItem(TEMPLATES_KEY);
+    const a = localStorage.getItem(ACTIVE_KEY);
+    const col = localStorage.getItem(COLLAPSED_KEY);
+    if (w) try {
+      const parsed = JSON.parse(w);
+      const migrated = {};
+      Object.keys(parsed).forEach(key => {
+        const val = parsed[key];
+        if (Array.isArray(val)) migrated[key] = { exercises: val, meta: null };
+        else migrated[key] = val;
+      });
+      setWorkouts(migrated);
+    } catch {}
+    if (c) try { setCatalog(JSON.parse(c)); } catch {}
+    if (tpl) try { setTemplates(JSON.parse(tpl)); } catch {}
+    if (a) try { setActive(JSON.parse(a)); } catch {}
+    if (col) try { setCollapsed(JSON.parse(col)); } catch {}
+  }, []);
+
+  useEffect(() => { localStorage.setItem(WORKOUTS_KEY, JSON.stringify(workouts)); }, [workouts]);
+  useEffect(() => { localStorage.setItem(CATALOG_KEY, JSON.stringify(catalog)); }, [catalog]);
+  useEffect(() => { localStorage.setItem(TEMPLATES_KEY, JSON.stringify(templates)); }, [templates]);
+  useEffect(() => { localStorage.setItem(COLLAPSED_KEY, JSON.stringify(collapsed)); }, [collapsed]);
+  useEffect(() => {
+    if (active) localStorage.setItem(ACTIVE_KEY, JSON.stringify(active));
+    else localStorage.removeItem(ACTIVE_KEY);
+  }, [active]);
+  useEffect(() => {
+    if (!active) return;
+    const int = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(int);
+  }, [active]);
+  useEffect(() => {
+    if (!scrollTargetRef.current) return;
+    const { setId } = scrollTargetRef.current;
+    requestAnimationFrame(() => {
+      const el = document.querySelector(`[data-set-id="${setId}"]`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const input = el.querySelector('input');
+        if (input && window.innerWidth > 768) input.focus();
+      }
+      scrollTargetRef.current = null;
+    });
+  }, [workouts, selectedDate]);
+  useEffect(() => {
+    if (calendarRef.current) {
+      calendarRef.current.scrollLeft = calendarRef.current.scrollWidth;
+    }
+  }, [weekOffset, selectedDate]);
+
+  const days = getWeek(weekOffset);
+  const todayKey = dateKey(new Date());
+  const currentDay = workouts[selectedDate] || { exercises: [], meta: null };
+  const currentWorkout = currentDay.exercises || [];
+  const currentMeta = currentDay.meta || null;
+  const selectedDateObj = parseDateKey(selectedDate);
+  const elapsed = active ? Math.max(0, Math.floor((now - active.startedAt) / 1000)) : 0;
+  const canGoForward = weekOffset < 1;
+
+  const monthShort = settings.language === 'en'
+    ? days[6].toLocaleDateString('en-US', { month: 'short' })
+    : days[6].toLocaleDateString('ru-RU', { month: 'short' });
+  const rangeText = `${days[0].getDate()}–${days[6].getDate()} ${monthShort}`;
+  const weekdaysShort = settings.language === 'en'
+    ? ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    : ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+
+  const dragProps = useLongPressDrag(currentWorkout, (fromIdx, toIdx) => {
+    const newList = [...currentWorkout];
+    const [moved] = newList.splice(fromIdx, 1);
+    newList.splice(toIdx, 0, moved);
+    setWorkouts({ ...workouts, [selectedDate]: { ...currentDay, exercises: newList } });
+  });
+
+  function startWorkout() {
+    unlockAudio();
+    vibrate(VIBRATE_MEDIUM, settings.vibration);
+    const startedAt = Date.now();
+    setNow(startedAt);
+    setActive({ startedAt, dateKey: selectedDate });
+  }
+  function stopWorkout() {
+    if (!active) return;
+    vibrate(VIBRATE_STRONG, settings.vibration);
+    const duration = Math.floor((Date.now() - active.startedAt) / 1000);
+    const day = workouts[active.dateKey] || { exercises: [], meta: null };
+    const exercises = day.exercises || [];
+    const muscles = getMuscleGroups(exercises, catalog);
+    const meta = { startedAt: active.startedAt, duration, finishedAt: Date.now() };
+    setWorkouts({ ...workouts, [active.dateKey]: { ...day, meta } });
+    setResult({
+      date: active.dateKey, ...meta,
+      tonnage: workoutTonnage(exercises), sets: totalSets(exercises),
+      exercisesCount: exercises.length, muscles,
+      exercises, catalog,
+    });
+    setActive(null);
+    skipRest();
+  }
+  function getPreviousSets(exerciseName) {
+    const keys = Object.keys(workouts).sort().reverse();
+    const selTs = parseDateKey(selectedDate).getTime();
+    for (const key of keys) {
+      if (parseDateKey(key).getTime() >= selTs) continue;
+      const day = workouts[key];
+      if (!day) continue;
+      const exs = day.exercises || (Array.isArray(day) ? day : []);
+      const ex = exs.find(e => e.name === exerciseName);
+      if (ex && ex.sets.length > 0) {
+        const hasData = ex.sets.some(s => (s.weight > 0 || s.reps > 0 || s.min > 0 || s.km > 0 || s.sec > 0));
+        if (hasData) return { date: key, sets: ex.sets, type: ex.type };
+      }
+    }
+    return null;
+  }
+  function getExerciseHistory(exerciseName) {
+    const keys = Object.keys(workouts).sort();
+    const items = [];
+    keys.forEach(key => {
+      const day = workouts[key];
+      if (!day) return;
+      const exs = day.exercises || (Array.isArray(day) ? day : []);
+      const ex = exs.find(e => e.name === exerciseName);
+      if (ex && ex.sets.length > 0) {
+        const hasData = ex.sets.some(s => (s.weight > 0 || s.reps > 0 || s.min > 0 || s.km > 0 || s.sec > 0));
+        if (hasData) {
+          const maxWeight = ex.type === EX_TYPE.STRENGTH
+            ? Math.max(...ex.sets.map(s => s.weight || 0), 0) : 0;
+          items.push({ date: key, sets: ex.sets, type: ex.type, tonnage: exerciseTonnage(ex), maxWeight });
+        }
+      }
+    });
+    return items;
+  }
+  function makeEmptySet(type) {
+    if (type === EX_TYPE.CARDIO) return { id: uid(), min: 0, km: 0 };
+    if (type === EX_TYPE.TIME) return { id: uid(), sec: 0 };
+    return { id: uid(), weight: 0, reps: 0 };
+  }
+  function addExercisesToWorkout(items) {
+    const newOnes = items.map(({ name, type }) => ({
+      id: uid(), name, type,
+      sets: [makeEmptySet(type)],
+    }));
+    setWorkouts({ ...workouts, [selectedDate]: { ...currentDay, exercises: [...currentWorkout, ...newOnes] } });
+    setIsPickerOpen(false);
+    vibrate(VIBRATE_MEDIUM, settings.vibration);
+  }
+  function addSet(exId) {
+    const ex = currentWorkout.find(e => e.id === exId);
+    if (!ex) return;
+    const newSet = makeEmptySet(ex.type);
+    scrollTargetRef.current = { exId, setId: newSet.id };
+    vibrate(VIBRATE_LIGHT, settings.vibration);
+    setWorkouts({ ...workouts,
+      [selectedDate]: { ...currentDay,
+        exercises: currentWorkout.map(e =>
+          e.id === exId ? { ...e, sets: [...e.sets, newSet] } : e
+        ) } });
+  }
+  function addSetToSuperset(exId) {
+    const ex = currentWorkout.find(e => e.id === exId);
+    if (!ex || !ex.supersetId) return addSet(exId);
+    const groupMembers = currentWorkout.filter(e => e.supersetId === ex.supersetId);
+    const newSets = {};
+    groupMembers.forEach(m => { newSets[m.id] = makeEmptySet(m.type); });
+    vibrate(VIBRATE_LIGHT, settings.vibration);
+    setWorkouts({ ...workouts,
+      [selectedDate]: { ...currentDay,
+        exercises: currentWorkout.map(e => {
+          if (newSets[e.id]) return { ...e, sets: [...e.sets, newSets[e.id]] };
+          return e;
+        }) } });
+  }
+  function duplicateSet(exId, setId) {
+    const ex = currentWorkout.find(e => e.id === exId);
+    if (!ex) return;
+    const source = ex.sets.find(s => s.id === setId);
+    if (!source) return;
+    const newSet = { ...source, id: uid() };
+    scrollTargetRef.current = { exId, setId: newSet.id };
+    vibrate(VIBRATE_LIGHT, settings.vibration);
+    setWorkouts({ ...workouts,
+      [selectedDate]: { ...currentDay,
+        exercises: currentWorkout.map(e => {
+          if (e.id !== exId) return e;
+          const idx = e.sets.findIndex(s => s.id === setId);
+          const newSets = [...e.sets];
+          newSets.splice(idx + 1, 0, newSet);
+          return { ...e, sets: newSets };
+        }) } });
+  }
+  function updateSet(exId, setId, field, value, startRestAfter = false) {
+    setWorkouts({ ...workouts,
+      [selectedDate]: { ...currentDay,
+        exercises: currentWorkout.map(e =>
+          e.id === exId ? { ...e, sets: e.sets.map(s => s.id === setId ? { ...s, [field]: value } : s) } : e
+        ) } });
+    if (startRestAfter && active && settings.restTimerEnabled) {
+      startRest(exId, setId);
+    }
+  }
+  function removeSet(exId, setId) {
+    if (!confirm(t('delete_set_confirm'))) return false;
+    vibrate(VIBRATE_LIGHT, settings.vibration);
+    setWorkouts({ ...workouts,
+      [selectedDate]: { ...currentDay,
+        exercises: currentWorkout.map(e =>
+          e.id === exId ? { ...e, sets: e.sets.filter(s => s.id !== setId) } : e
+        ) } });
+    return true;
+  }
+  function removeExercise(exId) {
+    if (!confirm(t('delete_exercise_confirm'))) return false;
+    vibrate(VIBRATE_MEDIUM, settings.vibration);
+    setWorkouts({ ...workouts, [selectedDate]: { ...currentDay,
+      exercises: currentWorkout.filter(e => e.id !== exId) } });
+    return true;
+  }
+  function toggleCollapse(exId) {
+    setCollapsed(prev => ({ ...prev, [exId]: !prev[exId] }));
+  }
+  function createSuperset(sourceExId, targetIds) {
+    const supersetId = uid();
+    setWorkouts({ ...workouts, [selectedDate]: { ...currentDay,
+      exercises: currentWorkout.map(e =>
+        e.id === sourceExId || targetIds.includes(e.id) ? { ...e, supersetId } : e
+      ) } });
+    setSupersetPicker(null);
+    vibrate(VIBRATE_MEDIUM, settings.vibration);
+  }
+  function dissolveSuperset(exId) {
+    const ex = currentWorkout.find(e => e.id === exId);
+    if (!ex || !ex.supersetId) return;
+    const ssId = ex.supersetId;
+    setWorkouts({ ...workouts, [selectedDate]: { ...currentDay,
+      exercises: currentWorkout.map(e =>
+        e.supersetId === ssId ? { ...e, supersetId: undefined } : e
+      ) } });
+    setActionMenu(null);
+  }
+  function removeFromSuperset(exId) {
+    setWorkouts({ ...workouts, [selectedDate]: { ...currentDay,
+      exercises: currentWorkout.map(e =>
+        e.id === exId ? { ...e, supersetId: undefined } : e
+      ) } });
+    setActionMenu(null);
+  }
+  function renameExercise(exId, newName) {
+    if (!newName.trim()) return;
+    setWorkouts({ ...workouts, [selectedDate]: { ...currentDay,
+      exercises: currentWorkout.map(e =>
+        e.id === exId ? { ...e, name: newName.trim() } : e
+      ) } });
+    setActionMenu(null);
+  }
+  function saveAsTemplate(name) {
+    if (!name.trim() || currentWorkout.length === 0) return;
+    const tpl = {
+      id: uid(), name: name.trim(),
+      exercises: currentWorkout.map(e => ({
+        name: e.name, type: e.type,
+        sets: e.sets.map(s => ({ weight: s.weight, reps: s.reps, min: s.min, km: s.km, sec: s.sec })),
+      })),
+    };
+    setTemplates([...templates, tpl]);
+    setSaveTplOpen(false);
+  }
+  function applyTemplate(tpl) {
+    const newExercises = tpl.exercises.map(e => ({
+      id: uid(), name: e.name, type: e.type,
+      sets: e.sets.map(s => ({ ...s, id: uid() })),
+    }));
+    setWorkouts({ ...workouts, [selectedDate]: { ...currentDay,
+      exercises: [...currentWorkout, ...newExercises] } });
+    setTemplatesOpen(false);
+  }
+  function removeTemplate(id) { setTemplates(templates.filter(t => t.id !== id)); }
+  const canSaveTpl = currentWorkout.length > 0 && !active;
+
+  const groupedItems = useMemo(() => {
+    const result = [];
+    const processed = new Set();
+    currentWorkout.forEach(ex => {
+      if (processed.has(ex.id)) return;
+      if (ex.supersetId) {
+        const members = currentWorkout.filter(e => e.supersetId === ex.supersetId);
+        members.forEach(m => processed.add(m.id));
+        result.push({ type: 'superset', supersetId: ex.supersetId, members });
+      } else {
+        processed.add(ex.id);
+        result.push({ type: 'single', exercise: ex });
+      }
+    });
+    return result;
+  }, [currentWorkout]);
+
+  return (
+    <>
+      <div className="tabs">
+        {currentWorkout.length > 0 && (
+          <>
+            <button className="tab-btn" onClick={() => setReportOpen(true)}
+              title={t('coach_report')}>
+              <Icon name="info" /> {t('coach_report')}
+            </button>
+            <button className="tab-btn" onClick={() => setShareDayOpen(true)}>
+              <Icon name="share" />
+            </button>
+          </>
+        )}
+        <button className="tab-btn" onClick={() => setSaveTplOpen(true)}
+          disabled={!canSaveTpl}
+          style={{ opacity: canSaveTpl ? 1 : 0.4, cursor: canSaveTpl ? 'pointer' : 'not-allowed' }}>
+          <Icon name="save" /> {t('save')}
+        </button>
+        <button className="tab-btn" onClick={() => setTemplatesOpen(true)}>
+          {t('templates')} ({templates.length})
+        </button>
+      </div>
+
+      {active && (
+        <div className="timer-bar-wrap">
+          <div className="timer-bar">
+            <div className="timer-icon"><Icon name="flame" /></div>
+            <div className="timer-info">
+              <div className="timer-label">{t('workout_in_progress')}</div>
+              <div className="timer-value">{fmtTimer(elapsed)}</div>
+            </div>
+            <button className="timer-stop" onClick={stopWorkout}>
+              <Icon name="stop" /> {t('finish')}
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="calendar-nav">
+        <button className="cal-nav-btn" onClick={() => setWeekOffset(weekOffset - 1)}>
+          <Icon name="chevronLeft" />
+        </button>
+        <div className="cal-range">{rangeText}</div>
+        <button className="cal-nav-btn" onClick={() => setWeekOffset(weekOffset + 1)} disabled={!canGoForward}>
+          <Icon name="chevronRight" />
+        </button>
+      </div>
+
+      <div className="calendar" ref={calendarRef}>
+        {days.map(d => {
+          const key = dateKey(d);
+          const isActive = key === selectedDate;
+          const isToday = key === todayKey;
+          const day = workouts[key];
+          const dayExs = day ? (day.exercises || (Array.isArray(day) ? day : [])) : [];
+          const hasWorkout = dayExs.length > 0;
+          const isFuture = key > todayKey;
+          return (
+            <div key={key}
+              className={`day ${isActive ? 'active' : ''} ${isToday ? 'today' : ''}`}
+              style={{ opacity: isFuture ? 0.5 : 1 }}
+              onClick={() => setSelectedDate(key)}>
+              <div className="wd">{weekdaysShort[d.getDay()]}</div>
+              <div className="num">{d.getDate()}</div>
+              <div className="dot" style={{ opacity: hasWorkout ? 1 : 0 }} />
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="page-title">
+        {selectedDate === todayKey ? t('today') : selectedDate > todayKey ? t('plan') : t('workout')}
+      </div>
+      <div className="page-date">
+        {selectedDateObj.toLocaleDateString(settings.language === 'en' ? 'en-US' : 'ru-RU',
+          { day: 'numeric', month: 'long', weekday: 'long' })}
+      </div>
+
+      {currentWorkout.length === 0 ? (
+        <div className="empty">
+          <Icon name="dumbbell" className="icon-lg" />
+          <div style={{ marginTop: 12 }}>{t('no_exercises')}</div>
+          <div className="empty-hint">{active ? t('add_or_start_active') : t('add_or_start')}</div>
+        </div>
+      ) : (
+        <div className="exercises">
+          {groupedItems.map((item, idx) => {
+            if (item.type === 'superset') {
+              const isDragging = item.members.some(m => dragProps.draggingId === m.id);
+              const isOver = dragProps.dragOverIndex === idx && !isDragging;
+              return (
+                <div key={item.supersetId}
+                  style={{
+                    borderTop: isOver ? '2px solid var(--accent)' : '2px solid transparent',
+                    borderRadius: 16,
+                    transition: 'border-top 0.15s',
+                    display: 'flex', flexDirection: 'column', gap: 6,
+                  }}>
+                  {item.members.map((ex, mi) => {
+                    const letter = String.fromCharCode(65 + mi);
+                    const isLast = mi === item.members.length - 1;
+                    return (
+                      <div key={ex.id} data-drag-id={ex.id}
+                        style={{
+                          opacity: dragProps.draggingId === ex.id ? 0.85 : 1,
+                          boxShadow: dragProps.draggingId === ex.id ? '0 16px 40px rgba(0,0,0,0.5)' : 'none',
+                          borderRadius: 16,
+                          position: 'relative',
+                          zIndex: dragProps.draggingId === ex.id ? 100 : 1,
+                          transition: dragProps.draggingId === ex.id ? 'none' : 'box-shadow 0.15s',
+                        }}>
+                        <ExerciseCard ex={ex}
+                          supersetLetter={letter}
+                          prev={getPreviousSets(ex.name)}
+                          isCollapsed={!!collapsed[ex.id]}
+                          onToggleCollapse={() => toggleCollapse(ex.id)}
+                          dragHandlers={dragProps.getHandleHandlers(ex, idx)}
+                          onOpenChart={() => setChartExercise(ex.name)}
+                          onOpenMenu={() => setActionMenu({ exId: ex.id, exName: ex.name })}
+                          onAddSet={() => addSetToSuperset(ex.id)}
+                          isLastInSuperset={isLast}
+                          hideAddButton={!isLast}
+                          onDupSet={(setId) => duplicateSet(ex.id, setId)}
+                          onUpdateSet={(setId, field, value, startRestAfter) => updateSet(ex.id, setId, field, value, startRestAfter)}
+                          onRemoveSet={(setId) => removeSet(ex.id, setId)}
+                          restState={restState}
+                          getRemaining={getRemaining}
+                          skipRest={skipRest}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            }
+            const ex = item.exercise;
+            const isDragging = dragProps.draggingId === ex.id;
+            const isOver = dragProps.dragOverIndex === idx && !isDragging;
+            return (
+              <div key={ex.id} data-drag-id={ex.id}
+                style={{
+                  opacity: isDragging ? 0.85 : 1,
+                  boxShadow: isDragging ? '0 16px 40px rgba(0,0,0,0.5)' : 'none',
+                  borderTop: isOver ? '2px solid var(--accent)' : '2px solid transparent',
+                  borderRadius: 16,
+                  transition: isDragging ? 'none' : 'box-shadow 0.15s',
+                  position: 'relative',
+                  zIndex: isDragging ? 100 : 1,
+                }}>
+                <ExerciseCard ex={ex}
+                  prev={getPreviousSets(ex.name)}
+                  isCollapsed={!!collapsed[ex.id]}
+                  onToggleCollapse={() => toggleCollapse(ex.id)}
+                  dragHandlers={dragProps.getHandleHandlers(ex, idx)}
+                  onOpenChart={() => setChartExercise(ex.name)}
+                  onOpenMenu={() => setActionMenu({ exId: ex.id, exName: ex.name })}
+                  onAddSet={() => addSet(ex.id)}
+                  onDupSet={(setId) => duplicateSet(ex.id, setId)}
+                  onUpdateSet={(setId, field, value, startRestAfter) => updateSet(ex.id, setId, field, value, startRestAfter)}
+                  onRemoveSet={(setId) => removeSet(ex.id, setId)}
+                  restState={restState}
+                  getRemaining={getRemaining}
+                  skipRest={skipRest}
+                />
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      <div className="bottom-bar">
+        <button className="bar-btn add" onClick={() => setIsPickerOpen(true)}>
+          <Icon name="plus" /> {t('add')}
+        </button>
+        {!active && <button className="bar-btn start" onClick={startWorkout}>
+          <Icon name="play" /> {t('start')}
+        </button>}
+      </div>
+
+      {isPickerOpen && (
+        <ExercisePicker catalog={catalog} setCatalog={setCatalog}
+          onAdd={addExercisesToWorkout} onClose={() => setIsPickerOpen(false)} />
+      )}
+      {chartExercise && (
+        <ChartModal exerciseName={chartExercise}
+          history={getExerciseHistory(chartExercise)}
+          catalog={catalog}
+          onClose={() => setChartExercise(null)} />
+      )}
+      {templatesOpen && (
+        <TemplatesModal templates={templates} onApply={applyTemplate}
+          onRemove={removeTemplate} onClose={() => setTemplatesOpen(false)} />
+      )}
+      {saveTplOpen && (
+        <SaveTemplateModal onSave={saveAsTemplate} onClose={() => setSaveTplOpen(false)} />
+      )}
+      {(shareDayOpen || result) && (
+        <WorkoutResultModal
+          data={shareDayOpen
+            ? buildDayShareData(selectedDate, currentWorkout, currentMeta, catalog, settings, t)
+            : buildResultData(result, catalog, settings, t)}
+          onClose={() => { setShareDayOpen(false); setResult(null); }}
+        />
+      )}
+      {reportOpen && currentWorkout.length > 0 && (
+        <WorkoutReportModal
+          date={selectedDate}
+          exercises={currentWorkout}
+          meta={currentMeta}
+          catalog={catalog}
+          onClose={() => setReportOpen(false)}
+        />
+      )}
+
+      {actionMenu && (
+        <ActionMenu
+          exercise={currentWorkout.find(e => e.id === actionMenu.exId)}
+          currentWorkout={currentWorkout}
+          t={t}
+          onClose={() => setActionMenu(null)}
+          onOpenChart={() => { setChartExercise(actionMenu.exName); setActionMenu(null); }}
+          onRename={(newName) => renameExercise(actionMenu.exId, newName)}
+          onDelete={() => { const ok = removeExercise(actionMenu.exId); if (ok) setActionMenu(null); }}
+          onSuperset={() => { setSupersetPicker({ sourceExId: actionMenu.exId }); setActionMenu(null); }}
+          onDissolve={() => dissolveSuperset(actionMenu.exId)}
+          onRemoveFromSuperset={() => removeFromSuperset(actionMenu.exId)}
+          hasSuperset={!!(currentWorkout.find(e => e.id === actionMenu.exId)?.supersetId)}
+        />
+      )}
+
+      {supersetPicker && (
+        <SupersetPicker
+          sourceExId={supersetPicker.sourceExId}
+          currentWorkout={currentWorkout}
+          t={t}
+          onClose={() => setSupersetPicker(null)}
+          onConfirm={(targetIds) => createSuperset(supersetPicker.sourceExId, targetIds)}
+        />
+      )}
+    </>
+  );
+}
+
+/* ============ КАРТОЧКА УПРАЖНЕНИЯ ============ */
+function ExerciseCard({ ex, prev, isCollapsed, onToggleCollapse, dragHandlers, onOpenChart, onOpenMenu, onAddSet, onDupSet, onUpdateSet, onRemoveSet, restState, getRemaining, skipRest, supersetLetter, isLastInSuperset, hideAddButton }) {
+  const { settings } = useSettings();
+  const t = useT();
+  const exTonnage = exerciseTonnage(ex);
+  const typeLabel = ex.type === EX_TYPE.CARDIO ? t('cardio')
+    : ex.type === EX_TYPE.TIME ? t('time') : '';
+  const translatedName = translateExercise(ex.name, settings.language);
+  const units = settings.units;
+
+  const restForThis = restState && restState.exerciseId === ex.id;
+  const restRemaining = restForThis ? getRemaining() : 0;
+  const restDone = restForThis && restState.done;
+
+  return (
+    <div className={`exercise-card ${ex.supersetId ? 'superset' : ''}`}>
+      <div className="exercise-head">
+        <div className="drag-handle" {...dragHandlers}>
+          <Icon name="gripVertical" />
+        </div>
+        <div className="exercise-name" onClick={onOpenMenu}>
+          {supersetLetter && <span className="superset-label">{supersetLetter}</span>}
+          {translatedName}
+          {typeLabel && <span className="exercise-type-badge">{typeLabel}</span>}
+          <span className="chart-hint" onClick={(e) => { e.stopPropagation(); onOpenChart(); }}>
+            <Icon name="chart" className="icon-sm" />
+          </span>
+        </div>
+        {exTonnage > 0 && <div className="exercise-tonnage">{fmtNum(exTonnage)} кг</div>}
+        <button className={`collapse-btn ${isCollapsed ? 'collapsed' : ''}`}
+          onClick={onToggleCollapse}>
+          <Icon name="chevronDown" />
+        </button>
+      </div>
+
+      {!isCollapsed && (
+        <>
+          {prev && (
+            <div className="prev-hint">
+              {t('last_time')} ({parseDateKey(prev.date).toLocaleDateString(
+                settings.language === 'en' ? 'en-US' : 'ru-RU',
+                { day: 'numeric', month: 'short' })}):{' '}
+              {prev.sets.filter(s => s.weight > 0 || s.reps > 0 || s.min > 0 || s.km > 0 || s.sec > 0)
+                .map(s => ex.type === EX_TYPE.CARDIO ? `${s.min}${t('minutes')}×${fmtNum(displayDistance(s.km, units))}${distanceUnit(units)}`
+                  : ex.type === EX_TYPE.TIME ? `${s.sec}${t('seconds')}`
+                  : `${fmtNum(displayWeight(s.weight, units))}×${s.reps}`).join(' · ')}
+            </div>
+          )}
+          {ex.sets.map((s, sIdx) => (
+            <SetRow key={s.id} set={s} idx={sIdx} type={ex.type}
+              onUpdate={onUpdateSet}
+              onRemove={() => onRemoveSet(s.id)}
+              onDup={() => onDupSet(s.id)}
+            />
+          ))}
+          {restForThis && (
+            <div className={`rest-timer ${restDone ? 'done' : ''}`} onClick={skipRest}>
+              <Icon name={restDone ? 'checkmark' : 'timer'} className="icon-sm" />
+              <span>{restDone ? t('rest_done') : fmtTimer(restRemaining)}</span>
+              <span style={{ marginLeft: 'auto', opacity: 0.7, fontSize: 11 }}>{t('skip_rest')}</span>
+            </div>
+          )}
+          {!hideAddButton && (
+            <button className="link-btn" onClick={onAddSet}>
+              <Icon name="plus" className="icon-sm" /> {t('add_set')}{isLastInSuperset && ex.supersetId ? ' (во все)' : ''}
+            </button>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+function SetRow({ set, idx, type, onUpdate, onRemove, onDup }) {
+  const { settings } = useSettings();
+  const t = useT();
+  const swipeRef = useSwipeLeft(onRemove);
+  const units = settings.units;
+
+  function handleUpdate(field, value) {
+    const safe = safeNum(value);
+    let startRestAfter = false;
+    if (field === 'reps' || field === 'sec' || field === 'km') {
+      if (safe > 0) startRestAfter = true;
+    }
+    onUpdate(set.id, field, safe, startRestAfter);
+  }
+
+  return (
+    <div className="set-row" ref={swipeRef} data-set-id={set.id}>
+      <div className="set-num">{idx + 1}</div>
+      {type === EX_TYPE.STRENGTH && (
+        <>
+          <input type="number" inputMode="decimal"
+            placeholder={units === 'imperial' ? 'lb' : 'кг'}
+            value={set.weight ? Math.round(displayWeight(set.weight, units) * 10) / 10 : ''}
+            onChange={e => handleUpdate('weight', inputToKg(safeNum(e.target.value), units))} />
+          <div className="times">×</div>
+          <input type="number" inputMode="numeric" placeholder={t('set_reps_placeholder')}
+            value={set.reps || ''}
+            onChange={e => handleUpdate('reps', e.target.value)} />
+        </>
+      )}
+      {type === EX_TYPE.CARDIO && (
+        <>
+          <input type="number" inputMode="decimal" placeholder={t('set_min_placeholder')}
+            value={set.min || ''}
+            onChange={e => handleUpdate('min', e.target.value)} />
+          <div className="times">×</div>
+          <input type="number" inputMode="decimal"
+            placeholder={units === 'imperial' ? 'mi' : 'км'}
+            value={set.km ? Math.round(displayDistance(set.km, units) * 100) / 100 : ''}
+            onChange={e => handleUpdate('km', inputToKm(safeNum(e.target.value), units))} />
+        </>
+      )}
+      {type === EX_TYPE.TIME && (
+        <input type="number" inputMode="decimal" placeholder={t('set_sec_placeholder')}
+          value={set.sec || ''}
+          onChange={e => handleUpdate('sec', e.target.value)} />
+      )}
+      <button className="icon-btn" onClick={onDup} title={t('duplicate')}>
+        <Icon name="copy" className="icon-sm" />
+      </button>
+    </div>
+  );
+}
+
+/* ============ МЕНЮ ДЕЙСТВИЙ ============ */
+function ActionMenu({ exercise, currentWorkout, t, onClose, onOpenChart, onRename, onDelete, onSuperset, onDissolve, onRemoveFromSuperset, hasSuperset }) {
+  const [renameMode, setRenameMode] = useState(false);
+  const [newName, setNewName] = useState(exercise ? exercise.name : '');
+  const swipeRef = useSwipeDown(onClose);
+
+  if (!exercise) return null;
+  const othersCount = currentWorkout.filter(e => e.id !== exercise.id).length;
+
+  return (
+    <div className="modal-bg" onClick={onClose}>
+      <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+        <div className="handle" />
+        <h2 style={{ marginBottom: 4 }}>{exercise.name}</h2>
+        <div style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: 20 }}>
+          {t('action_menu')}
+        </div>
+
+        {renameMode ? (
+          <div className="edit-row" style={{ marginBottom: 12 }}>
+            <input value={newName}
+              onChange={e => setNewName(e.target.value)}
+              autoFocus              onKeyDown={e => { if (e.key === 'Enter') { onRename(newName); setRenameMode(false); } if (e.key === 'Escape') setRenameMode(false); }} />
+            <button className="ok-btn" onClick={() => { onRename(newName); setRenameMode(false); }}>OK</button>
+          </div>
+        ) : (
+          <>
+            <button className="action-menu-item" onClick={onOpenChart}>
+              <Icon name="chart" /> {t('open_chart')}
+            </button>
+
+            {othersCount > 0 && (
+              <button className="action-menu-item" onClick={onSuperset}>
+                <Icon name="link" /> {t('superset_create')}
+              </button>
+            )}
+
+            {hasSuperset && (
+              <>
+                <button className="action-menu-item" onClick={onRemoveFromSuperset}>
+                  <Icon name="unlink" /> {t('superset_remove')}
+                </button>
+                <button className="action-menu-item" onClick={onDissolve}>
+                  <Icon name="unlink" /> {t('superset_dissolve')}
+                </button>
+              </>
+            )}
+
+            <button className="action-menu-item" onClick={() => setRenameMode(true)}>
+              <Icon name="edit" /> {t('rename')}
+            </button>
+
+            <button className="action-menu-item danger" onClick={onDelete}>
+              <Icon name="trash" /> {t('delete_exercise')}
+            </button>
+          </>
+        )}
+
+        <button className="btn-cancel" onClick={onClose} style={{ marginTop: 12 }}>{t('cancel')}</button>
+      </div>
+    </div>
+  );
+}
+
+function SupersetPicker({ sourceExId, currentWorkout, t, onClose, onConfirm }) {
+  const sourceEx = currentWorkout.find(e => e.id === sourceExId);
+  const sourceSupersetId = sourceEx ? sourceEx.supersetId : null;
+  const [selected, setSelected] = useState(() => {
+    if (sourceSupersetId) {
+      return currentWorkout.filter(e => e.supersetId === sourceSupersetId && e.id !== sourceExId).map(e => e.id);
+    }
+    return [];
+  });
+  const swipeRef = useSwipeDown(onClose);
+
+  const candidates = currentWorkout.filter(e =>
+    e.id !== sourceExId && (!e.supersetId || e.supersetId === sourceSupersetId)
+  );
+
+  function toggle(id) {
+    if (selected.includes(id)) setSelected(selected.filter(x => x !== id));
+    else setSelected([...selected, id]);
+  }
+
+  return (
+    <div className="modal-bg" onClick={onClose}>
+      <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+        <div className="handle" />
+        <h2>{t('superset_choose')}</h2>
+
+        {candidates.length === 0 ? (
+          <div style={{ color: 'var(--text-muted)', padding: '20px 0', textAlign: 'center' }}>
+            {t('superset_only_mine')}
+          </div>
+        ) : (
+          <>
+            {candidates.map(ex => (
+              <button key={ex.id}
+                className={`superset-check-item ${selected.includes(ex.id) ? 'selected' : ''}`}
+                onClick={() => toggle(ex.id)}>
+                <div className={`superset-check ${selected.includes(ex.id) ? 'on' : ''}`}>✓</div>
+                <span style={{ flex: 1 }}>{ex.name}</span>
+              </button>
+            ))}
+            <button className="btn-primary" style={{ marginTop: 12 }}
+              disabled={selected.length === 0}
+              onClick={() => onConfirm(selected)}>
+              {t('superset_create')} ({selected.length + 1})
+            </button>
+          </>
+        )}
+        <button className="btn-cancel" onClick={onClose}>{t('cancel')}</button>
+      </div>
+    </div>
+  );
+}/* ============ ЗАМЕРЫ ============ */
+function MeasuresTab() {
+  const { settings, measureFields, setMeasureFields } = useSettings();
+  const t = useT();
+  const [measures, setMeasures] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [selectedDate, setSelectedDate] = useState(dateKey(new Date()));
+  const [chartField, setChartField] = useState(null);
+
+  useEffect(() => {
+    const m = localStorage.getItem(MEASURES_KEY);
+    if (m) try { setMeasures(JSON.parse(m)); } catch {}
+  }, []);
+  useEffect(() => { localStorage.setItem(MEASURES_KEY, JSON.stringify(measures)); }, [measures]);
+
+  const sorted = [...measures].sort((a, b) => b.date.localeCompare(a.date));
+
+  function openNew() { setEditId(null); setFormData({}); setSelectedDate(dateKey(new Date())); setShowForm(true); }
+  function openEdit(m) { setEditId(m.id); setFormData({ ...m.values }); setSelectedDate(m.date); setShowForm(true); }
+  function saveMeasure() {
+    const values = {};
+    measureFields.forEach(f => {
+      const v = Number(formData[f.key]);
+      if (!isNaN(v) && v > 0) values[f.key] = v;
+    });
+    if (Object.keys(values).length === 0) { alert(t('values') + '?'); return; }
+    if (editId) {
+      setMeasures(measures.map(m => m.id === editId ? { ...m, date: selectedDate, values } : m));
+    } else {
+      const existing = measures.find(m => m.date === selectedDate);
+      if (existing) {
+        if (!confirm(t('date') + '? ' + t('save') + '?')) return;
+        setMeasures(measures.map(m => m.id === existing.id ? { ...m, values } : m));
+      } else {
+        setMeasures([...measures, { id: uid(), date: selectedDate, values }]);
+      }
+    }
+    setShowForm(false);
+  }
+  function removeMeasure(id) {
+    if (!confirm(t('delete') + '?')) return false;
+    setMeasures(measures.filter(m => m.id !== id));
+    return true;
+  }
+  function getChartData(fieldKey) {
+    return measures.filter(m => m.values[fieldKey] != null)
+      .map(m => ({ date: m.date, value: m.values[fieldKey] }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+  }
+
+  return (
+    <>
+      <div className="tabs">
+        <button className="tab-btn" onClick={openNew}>
+          <Icon name="plus" /> {t('new_measure')}
+        </button>
+      </div>
+
+      {sorted.length === 0 ? (
+        <div className="empty">
+          <Icon name="ruler" className="icon-lg" />
+          <div style={{ marginTop: 12 }}>{t('measures_empty')}</div>
+          <div className="empty-hint">{t('measures_hint')}</div>
+        </div>
+      ) : (
+        <>
+          <div className="chip-row">
+            {measureFields.filter(f => measures.some(m => m.values[f.key] != null)).map(f => (
+              <button key={f.key} className="chip" onClick={() => setChartField(f.key)}>
+                <Icon name="chart" className="icon-sm" /> {f.label}
+              </button>
+            ))}
+          </div>
+
+          {sorted.map((m, idx) => {
+            const prevM = sorted[idx + 1];
+            return (
+              <div key={m.id} className="measure-card">
+                <div className="measure-date-row">
+                  <div className="measure-date">
+                    {parseDateKey(m.date).toLocaleDateString(
+                      settings.language === 'en' ? 'en-US' : 'ru-RU',
+                      { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    <button className="icon-btn" onClick={() => openEdit(m)}><Icon name="edit" className="icon-sm" /></button>
+                    <button className="icon-btn" onClick={() => removeMeasure(m.id)}><Icon name="trash" className="icon-sm" /></button>
+                  </div>
+                </div>
+                <div className="measure-grid">
+                  {measureFields.map(f => {
+                    const val = m.values[f.key];
+                    if (val == null) return null;
+                    const prevVal = prevM?.values?.[f.key];
+                    const diff = prevVal != null ? val - prevVal : null;
+                    return (
+                      <div key={f.key} className="measure-cell">
+                        <div className="measure-cell-label">{f.label}</div>
+                        <div className="measure-cell-value">
+                          {val}<small>{f.unit}</small>
+                          {diff != null && diff !== 0 && (
+                            <span style={{ fontSize: 11, marginLeft: 6, fontWeight: 600,
+                              color: diff > 0 ? 'var(--green)' : 'var(--red)' }}>
+                              {diff > 0 ? '+' : ''}{diff.toFixed(1)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </>
+      )}
+
+      {showForm && (
+        <MeasureFormModal editId={editId} formData={formData} setFormData={setFormData}
+          selectedDate={selectedDate} setSelectedDate={setSelectedDate}
+          onSave={saveMeasure} onClose={() => setShowForm(false)} />
+      )}
+      {chartField && (
+        <MeasureChartModal field={measureFields.find(f => f.key === chartField)}
+          data={getChartData(chartField)} onClose={() => setChartField(null)} />
+      )}
+    </>
+  );
+}
+
+function MeasureFormModal({ editId, formData, setFormData, selectedDate, setSelectedDate, onSave, onClose }) {
+  const { measureFields, setMeasureFields } = useSettings();
+  const t = useT();
+  const swipeRef = useSwipeDown(onClose);
+  const [fieldsManagerOpen, setFieldsManagerOpen] = useState(false);
+
+  return (
+    <>
+      <div className="modal-bg" onClick={onClose}>
+        <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+          <div className="handle" />
+          <h2>{editId ? t('edit_measure') : t('new_measure')}</h2>
+          <div className="section-label">{t('date')}</div>
+          <input type="date" className="input" value={selectedDate}
+            onChange={e => setSelectedDate(e.target.value)} />
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+            <div className="section-label" style={{ margin: 0 }}>{t('values')}</div>
+            <button className="link-btn" style={{ fontSize: 13, padding: 0 }}
+              onClick={() => setFieldsManagerOpen(true)}>
+              <Icon name="edit" className="icon-sm" /> {t('manage_fields')}
+            </button>
+          </div>
+          <div className="measure-form">
+            {measureFields.map(f => (
+              <div key={f.key} className="measure-form-row">
+                <div className="measure-form-label">{f.label}<small>{f.unit}</small></div>
+                <input type="number" inputMode="decimal" placeholder="—"
+                  value={formData[f.key] ?? ''}
+                  onChange={e => setFormData({ ...formData, [f.key]: e.target.value })} />
+              </div>
+            ))}
+            {measureFields.length === 0 && (
+              <div style={{ color: 'var(--text-muted)', padding: '12px 0', textAlign: 'center', fontSize: 14 }}>
+                {t('no_data')}
+              </div>
+            )}
+          </div>
+          <button className="btn-primary" onClick={onSave} style={{ marginTop: 20 }}>
+            {editId ? t('save') : t('add')}
+          </button>
+          <button className="btn-cancel" onClick={onClose}>{t('cancel')}</button>
+        </div>
+      </div>
+
+      {fieldsManagerOpen && (
+        <FieldsManagerModal fields={measureFields} setFields={setMeasureFields}
+          onClose={() => setFieldsManagerOpen(false)} />
+      )}
+    </>
+  );
+}
+
+function FieldsManagerModal({ fields, setFields, onClose }) {
+  const t = useT();
+  const swipeRef = useSwipeDown(onClose);
+  const [editingKey, setEditingKey] = useState(null);
+  const [editName, setEditName] = useState('');
+  const [editUnit, setEditUnit] = useState('');
+  const [newFieldName, setNewFieldName] = useState('');
+  const [newFieldUnit, setNewFieldUnit] = useState('');
+  const [addMode, setAddMode] = useState(false);
+
+  const dragProps = useLongPressDrag(fields, (fromIdx, toIdx) => {
+    const newList = [...fields];
+    const [moved] = newList.splice(fromIdx, 1);
+    newList.splice(toIdx, 0, moved);
+    setFields(newList);
+  });
+
+  function startEdit(f) { setEditingKey(f.key); setEditName(f.label); setEditUnit(f.unit); }
+  function saveEdit() {
+    if (!editingKey) return;
+    const newName = editName.trim();
+    const newUnit = editUnit.trim();
+    if (!newName) { setEditingKey(null); return; }
+    setFields(fields.map(f => f.key === editingKey ? { ...f, label: newName, unit: newUnit } : f));
+    setEditingKey(null);
+  }
+  function deleteField(key) {
+    if (!confirm(t('delete_field_confirm'))) return false;
+    setFields(fields.filter(f => f.key !== key));
+    return true;
+  }
+  function addField() {
+    const name = newFieldName.trim();
+    const unit = newFieldUnit.trim() || 'см';
+    if (!name) return;
+    const key = 'custom_' + uid().slice(0, 8);
+    setFields([...fields, { key, label: name, unit }]);
+    setNewFieldName('');
+    setNewFieldUnit('');
+    setAddMode(false);
+  }
+
+  return (
+    <div className="modal-bg" onClick={onClose}>
+      <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+        <div className="handle" />
+        <h2>{t('fields')}</h2>
+
+        {fields.length === 0 && !addMode && (
+          <div style={{ color: 'var(--text-muted)', padding: '20px 0', textAlign: 'center' }}>
+            {t('no_data')}
+          </div>
+        )}
+
+        {fields.map((f, idx) => {
+          if (editingKey === f.key) {
+            return (
+              <div key={f.key} className="edit-row" style={{ flexDirection: 'column', alignItems: 'stretch', padding: 12, gap: 8 }}>
+                <input value={editName}
+                  onChange={e => setEditName(e.target.value)}
+                  placeholder={t('field_name')}
+                  autoFocus
+                  style={{ background: 'var(--bg-input)', borderRadius: 8, padding: '10px 12px' }} />
+                <input value={editUnit}
+                  onChange={e => setEditUnit(e.target.value)}
+                  placeholder={t('unit_placeholder')}
+                  style={{ background: 'var(--bg-input)', borderRadius: 8, padding: '10px 12px' }} />
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button className="btn-primary" style={{ margin: 0 }} onClick={saveEdit}>OK</button>
+                  <button className="btn-cancel" onClick={() => setEditingKey(null)}>{t('cancel')}</button>
+                </div>
+              </div>
+            );
+          }
+          const isDragging = dragProps.draggingId === f.key;
+          const isOver = dragProps.dragOverIndex === idx && !isDragging;
+          return (
+            <div key={f.key} data-drag-id={f.key}
+              style={{
+                opacity: isDragging ? 0.85 : 1,
+                boxShadow: isDragging ? '0 16px 40px rgba(0,0,0,0.5)' : 'none',
+                borderTop: isOver ? '2px solid var(--accent)' : '2px solid transparent',
+                borderRadius: 12, marginBottom: 6,
+                transition: isDragging ? 'none' : 'box-shadow 0.15s',
+                position: 'relative', zIndex: isDragging ? 100 : 1,
+              }}>
+              <FieldRow field={f}
+                dragHandlers={dragProps.getHandleHandlers(f, idx)}
+                onEdit={() => startEdit(f)}
+                onDelete={() => deleteField(f.key)} />
+            </div>
+          );
+        })}
+
+        {addMode ? (
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: 12, marginTop: 8 }}>
+            <input className="input" placeholder={t('field_name_placeholder')}
+              value={newFieldName}
+              onChange={e => setNewFieldName(e.target.value)}
+              autoFocus
+              onKeyDown={e => e.key === 'Enter' && addField()} />
+            <input className="input" placeholder={t('unit_placeholder')}
+              value={newFieldUnit}
+              onChange={e => setNewFieldUnit(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && addField()} />
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button className="btn-primary" style={{ margin: 0 }} onClick={addField}>{t('add')}</button>
+              <button className="btn-cancel" onClick={() => { setAddMode(false); setNewFieldName(''); setNewFieldUnit(''); }}>{t('cancel')}</button>
+            </div>
+          </div>
+        ) : (
+          <button className="btn-dashed" style={{ marginTop: 8 }} onClick={() => setAddMode(true)}>
+            <Icon name="plus" className="icon-sm" /> {t('add_field')}
+          </button>
+        )}
+
+        <button className="btn-cancel" onClick={onClose} style={{ marginTop: 16 }}>{t('close')}</button>
+      </div>
+    </div>
+  );
+}
+
+function FieldRow({ field, dragHandlers, onEdit, onDelete }) {
+  const swipeRef = useSwipeLeft(onDelete);
+  return (
+    <div className="ex-item" ref={swipeRef}
+      style={{ marginBottom: 0, paddingLeft: 4, touchAction: 'pan-y', willChange: 'transform' }}>
+      <div className="drag-handle" {...dragHandlers} style={{ marginRight: 2 }}>
+        <Icon name="gripVertical" />
+      </div>
+      <div style={{ flex: 1, minWidth: 0, padding: '12px 0' }}>
+        <span style={{ color: 'var(--text)', fontSize: 15 }}>{field.label}</span>
+        <span style={{ color: 'var(--text-muted)', fontSize: 12, marginLeft: 8 }}>{field.unit}</span>
+      </div>
+      <button className="ex-action-btn" onClick={onEdit}>
+        <Icon name="edit" className="icon-sm" />
+      </button>
+    </div>
+  );
+}
+
+function MeasureChartModal({ field, data, onClose }) {
+  const { settings } = useSettings();
+  const t = useT();
+  const swipeRef = useSwipeDown(onClose);
+  if (data.length === 0) {
+    return (
+      <div className="modal-bg" onClick={onClose}>
+        <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+          <div className="handle" />
+          <h2>{field.label}</h2>
+          <div style={{ color: 'var(--text-muted)', padding: '20px 0', textAlign: 'center' }}>{t('no_data')}</div>
+          <button className="btn-cancel" onClick={onClose}>{t('close')}</button>
+        </div>
+      </div>
+    );
+  }
+  const values = data.map(d => d.value);
+  const max = Math.max(...values);
+  const min = Math.min(...values);
+  const range = max - min || 1;
+  const W = 320, H = 160, PAD = 30;
+  const innerW = W - PAD * 2;
+  const innerH = H - PAD * 2;
+  const points = data.map((d, i) => {
+    const x = data.length === 1 ? PAD + innerW / 2 : PAD + (i / (data.length - 1)) * innerW;
+    const y = PAD + innerH - ((d.value - min) / range) * innerH;
+    return { x, y, ...d };
+  });
+  const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+  const first = data[0].value;
+  const last = data[data.length - 1].value;
+  const diff = last - first;
+
+  return (
+    <div className="modal-bg" onClick={onClose}>
+      <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+        <div className="handle" />
+        <h2>{field.label} ({field.unit})</h2>
+        <div className="chart-stats">
+          <div className="stat-box"><div className="stat-label">{t('chart_current')}</div><div className="stat-value">{last} {field.unit}</div></div>
+          <div className="stat-box"><div className="stat-label">{t('chart_max')}</div><div className="stat-value">{max}</div></div>
+          <div className="stat-box">
+            <div className="stat-label">{t('chart_change')}</div>
+            <div className="stat-value" style={{ color: diff > 0 ? 'var(--green)' : diff < 0 ? 'var(--red)' : 'var(--text-muted)' }}>
+              {diff > 0 ? '+' : ''}{diff.toFixed(1)}
+            </div>
+          </div>
+        </div>
+        <div className="chart-wrap">
+          <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 'auto' }}>
+            <line x1={PAD} y1={PAD} x2={PAD} y2={H - PAD} stroke="var(--border)" />
+            <line x1={PAD} y1={H - PAD} x2={W - PAD} y2={H - PAD} stroke="var(--border)" />
+            {points.length > 1 && <path d={pathD} fill="none" stroke="var(--accent)" strokeWidth="2.5" strokeLinecap="round" />}
+            {points.map((p, i) => <circle key={i} cx={p.x} cy={p.y} r="4" fill="var(--accent)" stroke="var(--bg)" strokeWidth="2" />)}
+            <text x={PAD - 6} y={PAD + 4} fill="var(--text-muted)" fontSize="10" textAnchor="end">{max}</text>
+            <text x={PAD - 6} y={H - PAD + 4} fill="var(--text-muted)" fontSize="10" textAnchor="end">{min}</text>
+          </svg>
+        </div>
+        <div className="section-label">{t('history')}</div>
+        {data.slice().reverse().map((d, i) => (
+          <div key={i} style={{ display: 'flex', justifyContent: 'space-between',
+            padding: '8px 0', borderBottom: '1px solid var(--border)', fontSize: 14 }}>
+            <span style={{ color: 'var(--text-muted)' }}>
+              {parseDateKey(d.date).toLocaleDateString(
+                settings.language === 'en' ? 'en-US' : 'ru-RU',
+                { day: 'numeric', month: 'short', year: 'numeric' })}
+            </span>
+            <span style={{ fontWeight: 600 }}>{d.value} {field.unit}</span>
+          </div>
+        ))}
+        <button className="btn-cancel" onClick={onClose} style={{ marginTop: 20 }}>{t('close')}</button>
+      </div>
+    </div>
+  );
+}
+
+/* ============ ГРАФИК УПРАЖНЕНИЯ ============ */
+function ChartModal({ exerciseName, history, catalog, onClose }) {
+  const { settings } = useSettings();
+  const t = useT();
+  const swipeRef = useSwipeDown(onClose);
+  const [show1RM, setShow1RM] = useState(false);
+  const type = history[0]?.type || EX_TYPE.STRENGTH;
+  const isStrength = type === EX_TYPE.STRENGTH;
+  const units = settings.units;
+
+  function getValue(item) {
+    if (isStrength) return item.maxWeight;
+    if (type === EX_TYPE.TIME) return Math.max(...item.sets.map(s => Number(s.sec) || 0), 0);
+    return Math.max(...item.sets.map(s => Number(s.min) || 0), 0);
+  }
+  const unit = isStrength ? (units === 'imperial' ? 'lb' : 'кг')
+    : type === EX_TYPE.TIME ? 'сек' : 'мин';
+
+  const records = useMemo(() => {
+    if (history.length === 0) return null;
+    let maxWeight = 0, maxWeightDate = null;
+    let maxReps = 0, maxRepsDate = null;
+    let maxTonnage = 0, maxTonnageDate = null;
+    let best1RM = 0, best1RMDate = null, best1RMWeight = 0, best1RMReps = 0;
+    history.forEach(h => {
+      if (h.tonnage > maxTonnage) { maxTonnage = h.tonnage; maxTonnageDate = h.date; }
+      if (h.type === EX_TYPE.STRENGTH) {
+        h.sets.forEach(s => {
+          const w = Number(s.weight) || 0;
+          const r = Number(s.reps) || 0;
+          if (w > maxWeight) { maxWeight = w; maxWeightDate = h.date; }
+          if (r > maxReps) { maxReps = r; maxRepsDate = h.date; }
+          const rm = calc1RM(w, r);
+          if (rm > best1RM) { best1RM = rm; best1RMDate = h.date; best1RMWeight = w; best1RMReps = r; }
+        });
+      }
+    });
+    return { maxWeight, maxWeightDate, maxReps, maxRepsDate, maxTonnage, maxTonnageDate, best1RM, best1RMDate, best1RMWeight, best1RMReps };
+  }, [history]);
+
+  const values = history.map(getValue);
+  const max = Math.max(...values, 1);
+  const min = Math.min(...values, 0);
+  const range = max - min || 1;
+  const W = 320, H = 160, PAD = 30;
+  const innerW = W - PAD * 2;
+  const innerH = H - PAD * 2;
+  const points = history.map((h, i) => {
+    const v = getValue(h);
+    const x = history.length === 1 ? PAD + innerW / 2 : PAD + (i / (history.length - 1)) * innerW;
+    const y = PAD + innerH - ((v - min) / range) * innerH;
+    return { x, y, v, ...h };
+  });
+  const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+  const first = values[0] || 0;
+  const last = values[values.length - 1] || 0;
+  const diff = last - first;
+
+  function fmtDate(d) {
+    return parseDateKey(d).toLocaleDateString(
+      settings.language === 'en' ? 'en-US' : 'ru-RU',
+      { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  return (
+    <div className="modal-bg" onClick={onClose}>
+      <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+        <div className="handle" />
+        <h2>{translateExercise(exerciseName, settings.language)}</h2>
+        {history.length === 0 ? (
+          <div style={{ color: 'var(--text-muted)', padding: '20px 0', textAlign: 'center' }}>{t('chart_no_data')}</div>
+        ) : (
+          <>
+            <div className="chart-stats">
+              <div className="stat-box"><div className="stat-label">{t('chart_current')}</div>
+                <div className="stat-value">{fmtNum(displayWeight(last, units))} {unit}</div></div>
+              <div className="stat-box"><div className="stat-label">{t('chart_max')}</div>
+                <div className="stat-value">{fmtNum(displayWeight(max, units))} {unit}</div></div>
+              <div className="stat-box">
+                <div className="stat-label">{t('chart_progress')}</div>
+                <div className="stat-value" style={{ color: diff >= 0 ? 'var(--green)' : 'var(--red)' }}>
+                  {diff >= 0 ? '+' : ''}{fmtNum(displayWeight(diff, units))} {unit}
+                </div>
+              </div>
+            </div>
+            <div className="chart-wrap">
+              <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 'auto' }}>
+                <line x1={PAD} y1={PAD} x2={PAD} y2={H - PAD} stroke="var(--border)" />
+                <line x1={PAD} y1={H - PAD} x2={W - PAD} y2={H - PAD} stroke="var(--border)" />
+                {points.length > 1 && <path d={pathD} fill="none" stroke="var(--accent)" strokeWidth="2.5" strokeLinecap="round" />}
+                {points.map((p, i) => <circle key={i} cx={p.x} cy={p.y} r="4" fill="var(--accent)" stroke="var(--bg)" strokeWidth="2" />)}
+                <text x={PAD - 6} y={PAD + 4} fill="var(--text-muted)" fontSize="10" textAnchor="end">{fmtNum(displayWeight(max, units))}</text>
+                <text x={PAD - 6} y={H - PAD + 4} fill="var(--text-muted)" fontSize="10" textAnchor="end">{fmtNum(displayWeight(min, units))}</text>
+              </svg>
+            </div>
+            {records && isStrength && (
+              <>
+                <div className="section-label">
+                  <Icon name="target" className="icon-sm" /> {t('personal_records')}
+                </div>
+                <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
+                  <div className="stat-box" style={{ flex: '1 1 30%' }}>
+                    <div className="stat-label">{t('record_max_weight')}</div>
+                    <div className="stat-value">{fmtNum(displayWeight(records.maxWeight, units))} {unit}</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>{fmtDate(records.maxWeightDate)}</div>
+                  </div>
+                  <div className="stat-box" style={{ flex: '1 1 30%' }}>
+                    <div className="stat-label">{t('record_max_reps')}</div>
+                    <div className="stat-value">{records.maxReps}</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>{fmtDate(records.maxRepsDate)}</div>
+                  </div>
+                  <div className="stat-box" style={{ flex: '1 1 30%' }}>
+                    <div className="stat-label">{t('record_max_tonnage')}</div>
+                    <div className="stat-value">{fmtNum(records.maxTonnage)} кг</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>{fmtDate(records.maxTonnageDate)}</div>
+                  </div>
+                </div>
+                <button className="btn-dashed" onClick={() => setShow1RM(!show1RM)}>
+                  <Icon name={show1RM ? 'chevronDown' : 'chevronRight'} className="icon-sm" />
+                  {show1RM ? t('hide_1rm') : t('show_1rm')}
+                </button>
+                {show1RM && (
+                  <div style={{ background: 'var(--bg-card)', borderRadius: 14, padding: 16, marginBottom: 16 }}>
+                    <div className="stat-label">{t('one_rm_title')}</div>
+                    <div style={{ fontSize: 32, fontWeight: 800, color: 'var(--accent)', marginTop: 8, fontVariantNumeric: 'tabular-nums' }}>
+                      {fmtNum(displayWeight(records.best1RM, units))} <span style={{ fontSize: 16, color: 'var(--text-muted)' }}>{unit}</span>
+                    </div>
+                    <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>
+                      {fmtNum(displayWeight(records.best1RMWeight, units))} × {records.best1RMReps} · {fmtDate(records.best1RMDate)}
+                    </div>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 12, lineHeight: 1.5 }}>
+                      {t('one_rm_desc')}
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+            <div className="section-label">{t('history_sets')}</div>
+            {history.slice().reverse().map((h, i) => (
+              <div key={i} className="history-item">
+                <div className="history-head">
+                  <span className="history-date">{fmtDate(h.date)}</span>
+                  {isStrength && h.tonnage > 0 && (
+                    <span className="history-tonnage">{fmtNum(h.tonnage)} кг</span>
+                  )}
+                </div>
+                <div className="history-sets">
+                  {h.sets.filter(s => s.weight > 0 || s.reps > 0 || s.min > 0 || s.km > 0 || s.sec > 0).map((s, j) => (
+                    <span key={j} className="history-set">
+                      {isStrength
+                        ? <><span className="w">{fmtNum(displayWeight(s.weight, units))}</span><span className="r"> × {s.reps}</span></>
+                        : h.type === EX_TYPE.CARDIO
+                          ? <><span className="w">{s.min}</span><span className="r"> мин × {fmtNum(displayDistance(s.km, units))} км</span></>
+                          : <><span className="w">{s.sec}</span><span className="r"> сек</span></>
+                      }
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </>
+        )}
+        <button className="btn-cancel" onClick={onClose} style={{ marginTop: 20 }}>{t('close')}</button>
+      </div>
+    </div>
+  );
+}
+
+/* ============ ХУК ШАРИНГА + ОБЩАЯ КАРТОЧКА ============ */
+function useShare() {
+  const [sharing, setSharing] = useState(false);
+  const ref = useRef(null);
+  async function share(filename = 'reps-workout.png') {
+    if (!ref.current) return;
+    setSharing(true);
+    try {
+      const canvas = await html2canvas(ref.current, {
+        backgroundColor: null, scale: 1, width: 1080, height: 1920, useCORS: true,
+      });
+      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+      if (!blob) { alert('Error'); return; }
+      const file = new File([blob], filename, { type: 'image/png' });
+      const canShareFiles = navigator.canShare && navigator.canShare({ files: [file] });
+      if (canShareFiles) {
+        try { await navigator.share({ files: [file], title: 'Reps' }); return; }
+        catch (e) { if (e.name === 'AbortError') return; }
+      }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } finally {
+      setSharing(false);
+    }
+  }
+  return { ref, sharing, share };
+}
+
+function WorkoutShareCard({ cardRef, data, settings, t }) {
+  const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark';
+  const cardMutedColor = isDarkTheme ? '#8a8a92' : '#6b6b75';
+  const cardCellBg = isDarkTheme ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)';
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#a78bfa';
+  const dateObj = parseDateKey(data.date);
+
+  return (
+    <div ref={cardRef} className="share-card-hidden"
+      data-share-theme={isDarkTheme ? 'dark' : 'light'}
+      aria-hidden="true">
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: 80 }}>
+        <div style={{ fontSize: 64, fontWeight: 800, color: accentColor, letterSpacing: -2 }}>Reps</div>
+      </div>
+      <div style={{ display: 'inline-block', background: 'rgba(167,139,250,0.2)', color: accentColor,
+        fontSize: 28, fontWeight: 700, padding: '16px 32px', borderRadius: 50,
+        textTransform: 'uppercase', letterSpacing: 4, marginBottom: 32, alignSelf: 'flex-start' }}>
+        ✓ {t('workout_completed')}
+      </div>
+      <div style={{ fontSize: 96, fontWeight: 800, lineHeight: 1.1, marginBottom: 24 }}>{t('great_job')}</div>
+      <div style={{ fontSize: 40, color: cardMutedColor, marginBottom: 80 }}>
+        {dateObj.toLocaleDateString(settings.language === 'en' ? 'en-US' : 'ru-RU',
+          { day: 'numeric', month: 'long', year: 'numeric' })}
+        {data.startTime && `, ${data.startTime}`}
+      </div>
+
+      {data.duration > 0 && (
+        <div style={{ display: 'flex', gap: 32, marginBottom: 60 }}>
+          <div style={{ flex: 1, background: cardCellBg, borderRadius: 32, padding: '40px 36px' }}>
+            <div style={{ color: cardMutedColor, fontSize: 26, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 16 }}>
+              {t('duration')}
+            </div>
+            <div style={{ fontSize: 60, fontWeight: 700 }}>{fmtDuration(data.duration)}</div>
+          </div>
+        </div>
+      )}
+
+      <div style={{ display: 'flex', gap: 32, marginBottom: 60 }}>
+        <div style={{ flex: 1, background: cardCellBg, borderRadius: 32, padding: '40px 36px' }}>
+          <div style={{ color: cardMutedColor, fontSize: 26, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 16 }}>
+            {data.mainLabel}
+          </div>
+          <div style={{ fontSize: 60, fontWeight: 700, display: 'flex', alignItems: 'baseline' }}>
+            {data.mainValue}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', gap: 24, marginBottom: 60 }}>
+        <div style={{ flex: 1, background: cardCellBg, borderRadius: 28, padding: '32px 28px' }}>
+          <div style={{ color: cardMutedColor, fontSize: 22, textTransform: 'uppercase', letterSpacing: 3 }}>
+            {t('exercises_count')}
+          </div>
+          <div style={{ fontSize: 52, fontWeight: 700, marginTop: 8 }}>{data.exercisesCount}</div>
+        </div>
+        <div style={{ flex: 1, background: cardCellBg, borderRadius: 28, padding: '32px 28px' }}>
+          <div style={{ color: cardMutedColor, fontSize: 22, textTransform: 'uppercase', letterSpacing: 3 }}>
+            {t('sets_count')}
+          </div>
+          <div style={{ fontSize: 52, fontWeight: 700, marginTop: 8 }}>{data.sets}</div>
+        </div>
+      </div>
+
+      {data.muscleNames.length > 0 && (
+        <div style={{ marginBottom: 60 }}>
+          <div style={{ color: cardMutedColor, fontSize: 26, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 24 }}>
+            {t('trained_groups')}
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+            {data.muscleNames.map(m => (
+              <span key={m} style={{
+                background: 'rgba(167,139,250,0.15)', color: accentColor,
+                fontSize: 32, fontWeight: 600, padding: '16px 32px', borderRadius: 50,
+              }}>{m}</span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div style={{ flex: 1 }} />
+      <div style={{ borderTop: `1px solid ${isDarkTheme ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
+        paddingTop: 40, color: cardMutedColor, fontSize: 30 }}>
+        Reps
+      </div>
+    </div>
+  );
+}
+
+function WorkoutPreview({ data, settings, t }) {
+  const dateObj = parseDateKey(data.date);
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#a78bfa';
+
+  return (
+    <div className="result-card">
+      <div className="result-badge">
+        <Icon name="checkmark" className="icon-sm" /> {t('workout_completed')}
+      </div>
+      <h2 className="result-title">{t('great_job')}</h2>
+      <div className="result-date">
+        {dateObj.toLocaleDateString(settings.language === 'en' ? 'en-US' : 'ru-RU',
+          { day: 'numeric', month: 'long', year: 'numeric' })}
+        {data.startTime && `, ${data.startTime}`}
+      </div>
+
+      <div className="result-main">
+        {data.duration > 0 && (
+          <div className="result-main-item">
+            <div className="result-main-label"><Icon name="clock" className="icon-sm" /> {t('duration')}</div>
+            <div className="result-main-value">{fmtDuration(data.duration)}</div>
+          </div>
+        )}
+        <div className="result-main-item">
+          <div className="result-main-label">
+            <Icon name={data.mainIcon} className="icon-sm" /> {data.mainLabel}
+          </div>
+          <div className="result-main-value">{data.mainValue}</div>
+        </div>
+      </div>
+
+      <div className="result-grid">
+        <div className="result-cell">
+          <div className="result-cell-label">{t('exercises_count')}</div>
+          <div className="result-cell-value">{data.exercisesCount}</div>
+        </div>
+        <div className="result-cell">
+          <div className="result-cell-label">{t('sets_count')}</div>
+          <div className="result-cell-value">{data.sets}</div>
+        </div>
+        {data.totalCardioMin > 0 && (
+          <div className="result-cell">
+            <div className="result-cell-label">{t('cardio_min')}</div>
+            <div className="result-cell-value">{data.totalCardioMin}</div>
+          </div>
+        )}
+        {data.totalTimeSec > 0 && (
+          <div className="result-cell">
+            <div className="result-cell-label">{t('time_sec')}</div>
+            <div className="result-cell-value">{data.totalTimeSec}</div>
+          </div>
+        )}
+      </div>
+
+      {data.muscleNames.length > 0 && (
+        <div className="result-muscles">
+          <div className="result-muscles-label">
+            <Icon name="target" className="icon-sm" /> {t('trained_groups')}
+          </div>
+          <div className="result-muscles-list">
+            {data.muscleNames.map(m => (<span key={m} className="muscle-tag">{m}</span>))}
+          </div>
+        </div>
+      )}
+
+      <div className="result-footer">
+        <Logo size={22} color={accentColor} />
+        <span className="logo-text">Reps</span>
+      </div>
+    </div>
+  );
+}
+
+function WorkoutResultModal({ data, onClose }) {
+  const { settings } = useSettings();
+  const t = useT();
+  const { ref: shareRef, sharing, share } = useShare();
+  const swipeRef = useSwipeDown(onClose);
+
+  return (
+    <div className="modal-bg center-mode" onClick={onClose}>
+      <div className="modal center" ref={swipeRef} onClick={e => e.stopPropagation()}>
+        <WorkoutPreview data={data} settings={settings} t={t} />
+        <button className="btn-primary" onClick={share} disabled={sharing} style={{ marginBottom: 8 }}>
+          <Icon name="share" /> {sharing ? t('sharing') : t('share')}
+        </button>
+        <button className="btn-cancel" onClick={onClose}>{t('close')}</button>
+      </div>
+      <WorkoutShareCard cardRef={shareRef} data={data} settings={settings} t={t} />
+    </div>
+  );
+}
+
+/* ============ МОДАЛКА ОТЧЁТА ============ */
+function WorkoutReportModal({ date, exercises, meta, catalog, onClose }) {
+  const { settings } = useSettings();
+  const t = useT();
+  const swipeRef = useSwipeDown(onClose);
+  const [copied, setCopied] = useState(false);
+
+  const data = useMemo(() => {
+    return buildDayShareData(date, exercises, meta, catalog, settings, t);
+  }, [date, exercises, meta, catalog, settings, t]);
+
+  const reportText = useMemo(() => {
+    return buildWorkoutReportText(data, exercises, settings, t, catalog);
+  }, [data, exercises, settings, t, catalog]);
+
+  const dateObj = parseDateKey(date);
+  const dateStr = dateObj.toLocaleDateString(
+    settings.language === 'en' ? 'en-US' : 'ru-RU',
+    { day: 'numeric', month: 'long', year: 'numeric' }
+  );
+
+  function handleDownload() {
+    const safeDate = date.replace(/[^\d-]/g, '');
+    downloadTextFile(reportText, `reps-report-${safeDate}.txt`);
+  }
+
+  async function handleShare() {
+    await shareText(reportText, `Reps — ${dateStr}`);
+  }
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(reportText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      shareText(reportText);
+    }
+  }
+
+  return (
+    <div className="modal-bg" onClick={onClose}>
+      <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+        <div className="handle" />
+        <h2>{t('coach_report')}</h2>
+        <div style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: 16 }}>
+          {dateStr}
+        </div>
+
+        <div className="report-preview">{reportText}</div>
+
+        <button className="btn-primary" onClick={handleShare} style={{ marginBottom: 8 }}>
+          <Icon name="share" /> {t('share_text')}
+        </button>
+
+        <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+          <button className="btn-cancel" onClick={handleDownload} style={{ flex: 1 }}>
+            <Icon name="disk" /> {t('download_txt')}
+          </button>
+          <button className="btn-cancel" onClick={handleCopy} style={{ flex: 1 }}>
+            <Icon name={copied ? 'checkmark' : 'copy'} /> {copied ? t('copied') : t('copy')}
+          </button>
+        </div>
+
+        <button className="btn-cancel" onClick={onClose}>{t('close')}</button>
+      </div>
+    </div>
+  );
+}
+
+/* ============ ШАБЛОНЫ ============ */
+function TemplatesModal({ templates, onApply, onRemove, onClose }) {
+  const t = useT();
+  const swipeRef = useSwipeDown(onClose);
+  return (
+    <div className="modal-bg" onClick={onClose}>
+      <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+        <div className="handle" />
+        <h2>{t('templates')}</h2>
+        {templates.length === 0 ? (
+          <div style={{ color: 'var(--text-muted)', padding: '20px 0', textAlign: 'center' }}>{t('templates_empty')}</div>
+        ) : (
+          templates.map(tpl => (
+            <div key={tpl.id} className="tpl-item">
+              <div className="tpl-info">
+                <div className="tpl-name">{tpl.name}</div>
+                <div className="tpl-sub">{tpl.exercises.length} {t('exercises_count').toLowerCase()}</div>
+              </div>
+              <div className="tpl-actions">
+                <button className="tpl-btn primary" onClick={() => onApply(tpl)}>{t('add')}</button>
+                <button className="tpl-btn" onClick={() => onRemove(tpl.id)}><Icon name="trash" className="icon-sm" /></button>
+              </div>
+            </div>
+          ))
+        )}
+        <button className="btn-cancel" onClick={onClose} style={{ marginTop: 16 }}>{t('close')}</button>
+      </div>
+    </div>
+  );
+}
+
+function SaveTemplateModal({ onSave, onClose }) {
+  const t = useT();
+  const [name, setName] = useState('');
+  const swipeRef = useSwipeDown(onClose);
+  return (
+    <div className="modal-bg" onClick={onClose}>
+      <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+        <div className="handle" />
+        <h2>{t('save_as_template')}</h2>
+        <input className="input" placeholder={t('template_name')}
+          value={name} onChange={e => setName(e.target.value)} autoFocus
+          onKeyDown={e => e.key === 'Enter' && onSave(name)} />
+        <button className="btn-primary" onClick={() => onSave(name)}>{t('save')}</button>
+        <button className="btn-cancel" onClick={onClose}>{t('cancel')}</button>
+      </div>
+    </div>
+  );
+}
+
+/* ============ ВЫБОР УПРАЖНЕНИЙ ============ */
+function ExercisePicker({ catalog, setCatalog, onAdd, onClose }) {
+  const { settings } = useSettings();
+  const t = useT();
+  const [view, setView] = useState('categories');
+  const [activeCategoryId, setActiveCategoryId] = useState(null);
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const [newExerciseName, setNewExerciseName] = useState('');
+  const [newExerciseType, setNewExerciseType] = useState(null);
+  const [query, setQuery] = useState('');
+  const [editing, setEditing] = useState(null);
+  const [selected, setSelected] = useState([]);
+  const [editCatName, setEditCatName] = useState(null);
+  const activeCategory = catalog.find(c => c.id === activeCategoryId);
+  const swipeRef = useSwipeDown(onClose);
+
+  const catDragProps = useLongPressDrag(catalog, (fromIdx, toIdx) => {
+    const newList = [...catalog];
+    const [moved] = newList.splice(fromIdx, 1);
+    newList.splice(toIdx, 0, moved);
+    setCatalog(newList);
+  });
+  const activeExs = activeCategory ? activeCategory.exercises.map(name => ({ id: name })) : [];
+  const exDragProps = useLongPressDrag(activeExs, (fromIdx, toIdx) => {
+    if (!activeCategory) return;
+    const newList = [...activeCategory.exercises];
+    const [moved] = newList.splice(fromIdx, 1);
+    newList.splice(toIdx, 0, moved);
+    setCatalog(catalog.map(c => c.id === activeCategory.id ? { ...c, exercises: newList } : c));
+  });
+
+  function isSelected(name) { return selected.some(s => s.name === name); }
+  function toggleSelect(name) {
+    if (isSelected(name)) {
+      setSelected(selected.filter(s => s.name !== name));
+      vibrate(VIBRATE_LIGHT, settings.vibration);
+    } else {
+      const type = getExerciseType(name, catalog, activeCategory);
+      setSelected([...selected, { name, type }]);
+      vibrate(VIBRATE_MEDIUM, settings.vibration);
+    }
+  }
+  function getExerciseType(name, cat, activeCat) {
+    for (const c of catalog) {
+      if (c.exercises.includes(name)) {
+        if (c.customTypes && c.customTypes[name]) return c.customTypes[name];
+        if (CARDIO_SECTIONS.includes(c.id)) return EX_TYPE.CARDIO;
+        if (TIME_SECTIONS.includes(c.id)) return EX_TYPE.TIME;
+        return EX_TYPE.STRENGTH;
+      }
+    }
+    if (activeCat) {
+      if (CARDIO_SECTIONS.includes(activeCat.id)) return EX_TYPE.CARDIO;
+      if (TIME_SECTIONS.includes(activeCat.id)) return EX_TYPE.TIME;
+    }
+    return EX_TYPE.STRENGTH;
+  }
+  function addCategory() {
+    const name = newCategoryName.trim();
+    if (!name) return;
+    const newCat = { id: uid(), name, exercises: [] };
+    setCatalog([...catalog, newCat]);
+    setActiveCategoryId(newCat.id);
+    setNewCategoryName('');
+    setView('exercises');
+  }
+  function addExerciseToCatalog() {
+    const name = newExerciseName.trim();
+    if (!name || !activeCategory) return;
+    if (activeCategory.exercises.includes(name)) { alert('Already exists'); return; }
+    const type = newExerciseType || EX_TYPE.STRENGTH;
+    setCatalog(catalog.map(c =>
+      c.id === activeCategory.id
+        ? { ...c, exercises: [...c.exercises, name], customTypes: { ...(c.customTypes || {}), [name]: type } }
+        : c
+    ));
+    setNewExerciseName('');
+    setNewExerciseType(null);
+    setView('exercises');
+  }
+  function removeExerciseFromCatalog(catId, exName) {
+    if (!confirm(t('delete_exercise_from_catalog'))) return false;
+    setCatalog(catalog.map(c =>
+      c.id === catId ? { ...c, exercises: c.exercises.filter(e => e !== exName) } : c
+    ));
+    return true;
+  }
+  function startEdit(catId, oldName) { setEditing({ catId, oldName, newName: oldName }); }
+  function saveEdit() {
+    if (!editing) return;
+    const newName = editing.newName.trim();
+    if (!newName) { setEditing(null); return; }
+    setCatalog(catalog.map(c =>
+      c.id === editing.catId
+        ? { ...c, exercises: c.exercises.map(e => e === editing.oldName ? newName : e) }
+        : c
+    ));
+    setEditing(null);
+  }
+  function removeCategory(catId) {
+    if (!confirm(t('delete_section_confirm'))) return false;
+    setCatalog(catalog.filter(c => c.id !== catId));
+    return true;
+  }
+  function renameCategory(catId, newName) {
+    if (!newName.trim()) return;
+    setCatalog(catalog.map(c => c.id === catId ? { ...c, name: newName.trim() } : c));
+    setEditCatName(null);
+  }
+  function confirmAdd() {
+    if (selected.length === 0) { onClose(); return; }
+    onAdd(selected);
+  }
+
+  const SelectionFooter = () => selected.length > 0 ? (
+    <div className="picker-actions">
+      <button className="btn-cancel" onClick={() => setSelected([])}>
+        {t('cancel')} ({selected.length})
+      </button>
+      <button className="btn-primary" onClick={confirmAdd}>
+        {t('add_selected')} ({selected.length})
+      </button>
+    </div>
+  ) : null;
+
+  if (view === 'categories') {
+    return (
+      <div className="modal-bg" onClick={onClose}>
+        <div className={`modal ${selected.length > 0 ? 'has-picker-actions' : ''}`}
+          ref={swipeRef} onClick={e => e.stopPropagation()}>
+          <div className="handle" />
+          <h2>{t('choose_category')}</h2>
+          <input className="search-input" placeholder={t('search_all')}
+            value={query} onChange={e => setQuery(e.target.value)} />
+          {query.trim() ? (
+            <>
+              <SearchResults catalog={catalog} query={query} editing={editing}
+                isSelected={isSelected} onToggleSelect={toggleSelect}
+                setEditing={setEditing}
+                onRemove={removeExerciseFromCatalog} onStartEdit={startEdit} onSaveEdit={saveEdit} />
+              <SelectionFooter />
+            </>
+          ) : (
+            <>
+              {catalog.map((cat, idx) => (
+                <CategoryRow key={cat.id}
+                  cat={cat} idx={idx}
+                  dragProps={catDragProps}
+                  isEditing={editCatName && editCatName.id === cat.id}
+                  editCatName={editCatName}
+                  setEditCatName={setEditCatName}
+                  onRename={(name) => renameCategory(cat.id, name)}
+                  onOpen={() => { setActiveCategoryId(cat.id); setView('exercises'); }}
+                  onDelete={() => removeCategory(cat.id)}
+                  settings={settings}
+                />
+              ))}
+              <button className="btn-dashed" onClick={() => setView('newCategory')} style={{ marginTop: 8 }}>
+                <Icon name="plus" className="icon-sm" /> {t('create_category')}
+              </button>
+              <SelectionFooter />
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  if (view === 'exercises' && activeCategory) {
+    return (
+      <div className="modal-bg" onClick={onClose}>
+        <div className={`modal ${selected.length > 0 ? 'has-picker-actions' : ''}`}
+          ref={swipeRef} onClick={e => e.stopPropagation()}>
+          <div className="handle" />
+          <button className="back-btn" onClick={() => { setView('categories'); setEditing(null); }}>
+            <Icon name="chevronLeft" className="icon-sm" /> {t('all_categories')}
+          </button>
+          {editCatName && editCatName.id === activeCategory.id ? (
+            <div className="edit-row" style={{ marginBottom: 16 }}>
+              <input value={editCatName.name}
+                onChange={e => setEditCatName({ ...editCatName, name: e.target.value })}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') renameCategory(activeCategory.id, editCatName.name);
+                  if (e.key === 'Escape') setEditCatName(null);
+                }}
+                autoFocus />
+              <button className="ok-btn" onClick={() => renameCategory(activeCategory.id, editCatName.name)}>OK</button>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+              <h2 style={{ margin: 0, flex: 1 }}>{translateExercise(activeCategory.name, settings.language)}</h2>
+              <button className="icon-btn" onClick={() => setEditCatName({ id: activeCategory.id, name: activeCategory.name })}>
+                <Icon name="edit" />
+              </button>
+            </div>
+          )}
+          {activeCategory.exercises.map((name, idx) => (
+            <ExerciseRow key={name}
+              name={name} idx={idx}
+              dragProps={exDragProps}
+              editing={editing && editing.catId === activeCategory.id ? editing : null}
+              setEditing={setEditing}
+              isSelected={isSelected(name)}
+              onToggleSelect={() => toggleSelect(name)}
+              onSaveEdit={saveEdit}
+              onStartEdit={() => startEdit(activeCategory.id, name)}
+              onDelete={() => removeExerciseFromCatalog(activeCategory.id, name)}
+              settings={settings}
+            />
+          ))}
+          <button className="btn-dashed" onClick={() => setView('newExercise')} style={{ marginTop: 12 }}>
+            <Icon name="plus" className="icon-sm" /> {t('add_exercise')}
+          </button>
+          <button className="btn-cancel"
+            onClick={() => { if (removeCategory(activeCategory.id) !== false) setView('categories'); }}
+            style={{ marginTop: 8, color: 'var(--red)' }}>{t('delete_category')}</button>
+          <SelectionFooter />
+        </div>
+      </div>
+    );
+  }
+
+  if (view === 'newCategory') {
+    return (
+      <div className="modal-bg" onClick={onClose}>
+        <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+          <div className="handle" />
+          <button className="back-btn" onClick={() => setView('categories')}>
+            <Icon name="chevronLeft" className="icon-sm" /> {t('back')}
+          </button>
+          <h2>{t('new_category')}</h2>
+          <input className="input" placeholder="Например, Ягодицы"
+            value={newCategoryName} onChange={e => setNewCategoryName(e.target.value)} autoFocus
+            onKeyDown={e => e.key === 'Enter' && addCategory()} />
+          <button className="btn-primary" onClick={addCategory}>{t('create_category')}</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (view === 'newExercise' && activeCategory) {
+    return (
+      <div className="modal-bg" onClick={onClose}>
+        <div className="modal" ref={swipeRef} onClick={e => e.stopPropagation()}>
+          <div className="handle" />
+          <button className="back-btn" onClick={() => setView('exercises')}>
+            <Icon name="chevronLeft" className="icon-sm" /> {t('back')}
+          </button>
+          <h2>{t('new_exercise')}</h2>
+          <div className="section-label">{t('section')}: {translateExercise(activeCategory.name, settings.language)}</div>
+          <input className="input" placeholder="Например, Жим лёжа"
+            value={newExerciseName} onChange={e => setNewExerciseName(e.target.value)} autoFocus
+            onKeyDown={e => e.key === 'Enter' && addExerciseToCatalog()} />
+          <div className="section-label">{t('exercise_type')}</div>
+          <div className="type-selector">
+            <button className={`type-opt ${newExerciseType === null || newExerciseType === EX_TYPE.STRENGTH ? 'active' : ''}`}
+              onClick={() => setNewExerciseType(EX_TYPE.STRENGTH)}><Icon name="dumbbell" className="icon-sm" /> {t('type_strength')}</button>
+            <button className={`type-opt ${newExerciseType === EX_TYPE.CARDIO ? 'active' : ''}`}
+              onClick={() => setNewExerciseType(EX_TYPE.CARDIO)}><Icon name="run" className="icon-sm" /> {t('type_cardio')}</button>
+            <button className={`type-opt ${newExerciseType === EX_TYPE.TIME ? 'active' : ''}`}
+              onClick={() => setNewExerciseType(EX_TYPE.TIME)}><Icon name="timer" className="icon-sm" /> {t('type_time')}</button>
+          </div>
+          <button className="btn-primary" onClick={addExerciseToCatalog}>{t('add')}</button>
+        </div>
+      </div>
+    );
+  }
+  return null;
+}
+
+function CategoryRow({ cat, idx, dragProps, isEditing, editCatName, setEditCatName, onRename, onOpen, onDelete, settings }) {
+  const swipeRef = useSwipeLeft(onDelete);
+  const isDragging = dragProps.draggingId === cat.id;
+  const isOver = dragProps.dragOverIndex === idx && !isDragging;
+
+  if (isEditing) {
+    return (
+      <div className="edit-row" style={{ marginBottom: 8 }}>
+        <input value={editCatName.name}
+          onChange={e => setEditCatName({ ...editCatName, name: e.target.value })}
+          onKeyDown={e => {
+            if (e.key === 'Enter') onRename(editCatName.name);
+            if (e.key === 'Escape') setEditCatName(null);
+          }}
+          autoFocus />
+        <button className="ok-btn" onClick={() => onRename(editCatName.name)}>OK</button>
+      </div>
+    );
+  }
+
+  return (
+    <div data-drag-id={cat.id}
+      style={{
+        opacity: isDragging ? 0.85 : 1,
+        boxShadow: isDragging ? '0 16px 40px rgba(0,0,0,0.5)' : 'none',
+        borderTop: isOver ? '2px solid var(--accent)' : '2px solid transparent',
+        borderRadius: 14, marginBottom: 8,
+        transition: isDragging ? 'none' : 'box-shadow 0.15s',
+        position: 'relative', zIndex: isDragging ? 100 : 1,
+      }}>
+      <div className="category-item" ref={swipeRef}
+        style={{ marginBottom: 0, padding: '8px 4px 8px 0', touchAction: 'pan-y', willChange: 'transform' }}>
+        <div className="drag-handle" {...dragProps.getHandleHandlers(cat, idx)}>
+          <Icon name="gripVertical" />
+        </div>
+        <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', textAlign: 'left', padding: '8px 0' }}
+          onClick={onOpen}>
+          {translateExercise(cat.name, settings.language)}
+          <span className="count" style={{ float: 'right', marginTop: 4 }}>
+            {cat.exercises.length}<Icon name="chevronRight" />
+          </span>
+        </span>
+        <button className="ex-action-btn"
+          onClick={(e) => { e.stopPropagation(); setEditCatName({ id: cat.id, name: cat.name }); }}>
+          <Icon name="edit" className="icon-sm" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ExerciseRow({ name, idx, dragProps, editing, setEditing, isSelected, onToggleSelect, onSaveEdit, onStartEdit, onDelete, settings }) {
+  const swipeRef = useSwipeLeft(onDelete);
+  const isDragging = dragProps.draggingId === name;
+  const isOver = dragProps.dragOverIndex === idx && !isDragging;
+
+  if (editing && editing.oldName === name) {
+    return (
+      <div className="edit-row">
+        <input value={editing.newName}
+          onChange={e => setEditing({ ...editing, newName: e.target.value })}
+          onKeyDown={e => { if (e.key === 'Enter') onSaveEdit(); if (e.key === 'Escape') setEditing(null); }}
+          autoFocus />
+        <button className="ok-btn" onClick={onSaveEdit}>OK</button>
+      </div>
+    );
+  }
+
+  return (
+    <div data-drag-id={name}
+      style={{
+        opacity: isDragging ? 0.85 : 1,
+        boxShadow: isDragging ? '0 16px 40px rgba(0,0,0,0.5)' : 'none',
+        borderTop: isOver ? '2px solid var(--accent)' : '2px solid transparent',
+        borderRadius: 12, marginBottom: 6,
+        transition: isDragging ? 'none' : 'box-shadow 0.15s',
+        position: 'relative', zIndex: isDragging ? 100 : 1,
+      }}>
+      <div className={`ex-item ${isSelected ? 'selected' : ''}`} ref={swipeRef}
+        style={{ marginBottom: 0, paddingLeft: 4, touchAction: 'pan-y', willChange: 'transform' }}>
+        <div className="drag-handle" {...dragProps.getHandleHandlers({ id: name }, idx)} style={{ marginRight: 2 }}>
+          <Icon name="gripVertical" />
+        </div>
+        <div className={`ex-check ${isSelected ? 'on' : ''}`}
+          onClick={onToggleSelect}>✓</div>
+        <button className="ex-name-btn" onClick={onToggleSelect}>
+          {translateExercise(name, settings.language)}
+        </button>
+        <button className="ex-action-btn" onClick={onStartEdit}>
+          <Icon name="edit" className="icon-sm" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function SearchResults({ catalog, query, editing, isSelected, onToggleSelect, setEditing, onRemove, onStartEdit, onSaveEdit }) {
+  const { settings } = useSettings();
+  const t = useT();
+  const q = query.toLowerCase();
+  const results = [];
+  catalog.forEach(cat => {
+    cat.exercises.forEach(ex => {
+      const translated = translateExercise(ex, settings.language);
+      if (ex.toLowerCase().includes(q) || translated.toLowerCase().includes(q)) {
+        results.push({ cat, ex });
+      }
+    });
+  });
+  if (results.length === 0) {
+    return <div style={{ color: 'var(--text-muted)', fontSize: 14, padding: '12px 0' }}>{t('nothing_found')}</div>;
+  }
+  return (
+    <>
+      <div className="section-label">{t('found')}: {results.length}</div>
+      {results.map(({ cat, ex }) => (
+        editing && editing.catId === cat.id && editing.oldName === ex ? (
+          <div key={cat.id + ex} className="edit-row">
+            <input value={editing.newName}
+              onChange={e => setEditing({ ...editing, newName: e.target.value })}
+              onKeyDown={e => { if (e.key === 'Enter') onSaveEdit(); if (e.key === 'Escape') setEditing(null); }}
+              autoFocus />
+            <button className="ok-btn" onClick={onSaveEdit}>OK</button>
+          </div>
+        ) : (
+          <div key={cat.id + ex} className={`ex-item ${isSelected(ex) ? 'selected' : ''}`}>
+            <div className={`ex-check ${isSelected(ex) ? 'on' : ''}`}
+              onClick={() => onToggleSelect(ex)}>✓</div>
+            <button className="ex-name-btn" onClick={() => onToggleSelect(ex)}>
+              {translateExercise(ex, settings.language)}
+              <span style={{ color: 'var(--text-muted)', fontSize: 12, marginLeft: 8 }}>
+                {translateExercise(cat.name, settings.language)}
+              </span>
+            </button>
+            <button className="ex-action-btn" onClick={() => onStartEdit(cat.id, ex)}>
+              <Icon name="edit" className="icon-sm" />
+            </button>
+          </div>
+        )
+      ))}
+    </>
+  );
+}
+
+/* ============ РЕНДЕР ============ */
+ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    const swCode = `
+      self.addEventListener('install', e => e.skipWaiting());
+      self.addEventListener('activate', e => self.clients.claim());
+      self.addEventListener('fetch', e => {
+        e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+      });
+    `;
+    const blob = new Blob([swCode], { type: 'application/javascript' });
+    const url = URL.createObjectURL(blob);
+    navigator.serviceWorker.register(url).catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
